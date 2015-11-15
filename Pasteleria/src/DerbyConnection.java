@@ -20,6 +20,7 @@ public class DerbyConnection {
 	}
 	
 	public boolean MLogin(String user, String pass){
+		boolean loginSuccess = false;
 		try{
 			Class.forName("org.apache.derby.jdbc.ClientDriver").newInstance();
 			String conn = "jdbc:derby://localhost:1527/PasteleriaDB;user=" + user + ";password=" + pass;
@@ -36,20 +37,23 @@ public class DerbyConnection {
 				if (Usuario.contains("ADMINISTRADORSCHEMA")){
 					 InicioAdministrador FInicioAdm= new InicioAdministrador();
 					 FInicioAdm.setVisible(true);
+					 loginSuccess = true;
 				 }
 				 else if(Usuario.contains("EMPLEADOSCHEMA")){
 					 InicioEmpleado FInicioEmp= new InicioEmpleado();
 					 FInicioEmp.setVisible(true);
+					 loginSuccess = true;
 				 }
 				 else if(Usuario.contains("CLIENTESCHEMA")){
 					 InicioCliente FInicioCl= new InicioCliente();
 					 FInicioCl.setVisible(true);
+					 loginSuccess = true;
 				 }
 				 else {
 					 JOptionPane.showMessageDialog(null, "Contactarse con DBA usuario no existe.");
 				 }
 				rs.close();
-				return connection.isValid(0);
+				return loginSuccess;
 		} catch(Exception ex){
 			return false;
 		}

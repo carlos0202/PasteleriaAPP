@@ -49,6 +49,7 @@ public class PedidoEA extends JFrame {
 	private JTextField txtCliente;
 	private JTextField txtAbono;
 	private JTextField txtTotal;
+	private JTextField txtBusqueda;
 	private JComboBox comboBox;
 	private int dia=0,mes=0;
 	private JFormattedTextField ftxtFecha=null;
@@ -96,7 +97,8 @@ public class PedidoEA extends JFrame {
 	 * Create the frame.
 	 */
 	public PedidoEA() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Heleine Scutt\\workspace\\Pasteleria0\\src\\Img\\cakeP.png"));
+		setIconImage(new ImageIcon(this.getClass().getResource("/Img/cakeP.png")).getImage());
+		//setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Heleine Scutt\\workspace\\Pasteleria0\\src\\Img\\cakeP.png"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 820, 478);
 		contentPane = new JPanel();
