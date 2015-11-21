@@ -247,12 +247,23 @@ public class PedidoEA extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try{
 					DatosUsuario.getInstance().getUserName();
-					String sql="update PasteleriaDBA.Pedido set PedidoID='"+txtID.getText()+
+					Date selectedDate = (Date)dpFechaPedido.getModel().getValue();
+					String sql = "update PasteleriaDBA.Pedido set StatusPedido=?, ProductoID=?, ClienteID=?,"+		
+							" FechaPedido=?, AbonoPedido=?, TotalPedido=? where PedidoID=?";
+					/*String sql="update PasteleriaDBA.Pedido set PedidoID='"+txtID.getText()+
 							   "' ,StatusPedido ='"+txtStatus.getText()+"' ,ProductoID='"+txtProducto.getText()+
 							   "' ,ClienteID='"+txtCliente.getText()+"',FechaPedido='"+ftxtFPedido.getText()+
-							   "' ,AbonoPedido='"+txtAbono.getText()+"' ,TotalPedido='"+txtTotal.getText()+"' where PedidoID='"+txtID.getText()+"' ";
+							   "' ,AbonoPedido='"+txtAbono.getText()+"' ,TotalPedido='"+txtTotal.getText()+"' where PedidoID='"+txtID.getText()+"' ";*/
 					PreparedStatement pst=DerbyConnection.DbStart().prepareStatement(sql);
-					pst.executeUpdate();
+					pst.setString(1,txtStatus.getText());
+					pst.setInt(2,Integer.parseInt(txtProducto.getText()));
+					pst.setInt(3,Integer.parseInt(txtCliente.getText()));
+					pst.setDate(4,new java.sql.Date(selectedDate.getTime()));
+					pst.setDouble(5,Double.parseDouble(txtAbono.getText()));
+					pst.setDouble(6,Double.parseDouble(txtTotal.getText()));
+					pst.setInt(7, Integer.parseInt(txtID.getText()));
+
+					pst.execute();
 				
 					JOptionPane.showMessageDialog(null,"Pedido Actualizado...");
 				
