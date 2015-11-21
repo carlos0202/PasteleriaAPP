@@ -1,38 +1,38 @@
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.text.MaskFormatter;
-import javax.swing.JTable;
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
 import java.awt.Font;
 import java.awt.Image;
-
-import org.eclipse.wb.swing.FocusTraversalOnArray;
-
-import net.proteanit.sql.DbUtils;
-
-import java.awt.Component;
-import java.awt.Window.Type;
+import java.awt.ItemSelectable;
+import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.awt.event.ActionEvent;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import java.awt.Toolkit;
+import java.util.Properties;
+
 import javax.swing.ImageIcon;
-import java.awt.Color;
-import java.awt.SystemColor;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
+
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
+
+import net.proteanit.sql.DbUtils;
 
 public class PedidoEA extends JFrame {
 
@@ -54,7 +54,9 @@ public class PedidoEA extends JFrame {
 	private int dia=0,mes=0;
 	private JFormattedTextField ftxtFecha=null;
 	private JFormattedTextField ftxtFPedido=null;
-	
+	private JDatePickerImpl dpBusqueda;
+	private JDatePanelImpl dpBusquedaPanel;
+	private UtilDateModel dpBusquedaModel;
 
 	public void MascaraFecha(){
 		MaskFormatter Mascara=null;
@@ -206,28 +208,36 @@ public class PedidoEA extends JFrame {
 		btnBuscarPedido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
-					if(e.getSource()==comboBox){
-						String sql="select * from PasteleriaDBA.Pedido where PedidoID=?";
-						PreparedStatement pst=DerbyConnection.DbStart().prepareStatement(sql);
-						pst.setString(1,(String)txtBusqueda.getText());
-						ResultSet rs= pst.executeQuery();
-						
-						table.setModel(DbUtils.resultSetToTableModel(rs));
-					}
-					else if (e.getSource()==comboBox){
-						String sql="select * from PasteleriaDBA.Pedido where Fecha=?";
-						PreparedStatement pst=DerbyConnection.DbStart().prepareStatement(sql);
-						pst.setString(1,(String)txtBusqueda.getText());
-						ResultSet rs= pst.executeQuery();
-						
-						table.setModel(DbUtils.resultSetToTableModel(rs));
-					}
-					else{
-						JOptionPane.showMessageDialog(null,"Opcion no valida...");
+					switch(comboBox.getSelectedIndex()){
+						case 0: { // buscar por id
+							String sql="select * from PasteleriaDBA.Pedido where PedidoID=?";
+							PreparedStatement pst=DerbyConnection.DbStart().prepareStatement(sql);
+							pst.setString(1,txtBusqueda.getText());
+							ResultSet rs= pst.executeQuery();
+							table.setModel(DbUtils.resultSetToTableModel(rs));
+						} break;
+						case 1: { // buscar por fecha
+							String sql="select * from PasteleriaDBA.Pedido where Fecha=?";
+							PreparedStatement pst=DerbyConnection.DbStart().prepareStatement(sql);
+							Date selectedDate = (Date) dpBusqueda.getModel().getValue();
+							pst.setDate(1,new java.sql.Date(selectedDate.getTime()));
+							ResultSet rs= pst.executeQuery();							
+							table.setModel(DbUtils.resultSetToTableModel(rs));
+						} break;
+						case 2: { // buscar por id cliente
+							String sql="select * from PasteleriaDBA.Pedido where ClienteID=?";
+							PreparedStatement pst=DerbyConnection.DbStart().prepareStatement(sql);
+							pst.setInt(1,Integer.parseInt(txtBusqueda.getText()));
+							ResultSet rs= pst.executeQuery();							
+							table.setModel(DbUtils.resultSetToTableModel(rs));
+						} break;
+						default: {
+							JOptionPane.showMessageDialog(null,"Opcion no valida...");
+						} break;
 					}
 										
 				}catch(Exception ex){
-					JOptionPane.showMessageDialog(null,"Pedido no se encuentra...");
+					JOptionPane.showMessageDialog(null,"Pedido no se encuentra, datos invalidos...");
 				}
 			}
 		});
@@ -313,9 +323,27 @@ public class PedidoEA extends JFrame {
 		
 		txtProducto = new JTextField();
 		txtProducto.setText("");
-		txtProducto.setBounds(106, 263, 86, 20);
+		txtProducto.setBounds(106, 262, 86, 20);
 		contentPane.add(txtProducto);
 		txtProducto.setColumns(10);
+		
+		txtBusqueda = new JTextField();
+		txtBusqueda.setText("");
+		txtBusqueda.setBounds(380, 151, 86, 20);
+		contentPane.add(txtBusqueda);
+		txtBusqueda.setColumns(10);
+		
+		Properties p = new Properties();
+		p.put("text.today", "Hoy");
+		p.put("text.month", "Mes");
+		p.put("text.year", "A\u00f1o");
+		dpBusquedaModel = new UtilDateModel();
+		dpBusquedaPanel = new JDatePanelImpl(dpBusquedaModel, p);
+		dpBusqueda = new JDatePickerImpl(dpBusquedaPanel, new DateLabelFormatter());
+		dpBusqueda.setSize(176, 20);
+		dpBusqueda.setLocation(380, 151);
+		contentPane.add(dpBusqueda);
+		dpBusqueda.setVisible(false);
 		
 		txtCliente = new JTextField();
 		txtCliente.setBounds(106, 288, 86, 20);
@@ -340,6 +368,31 @@ public class PedidoEA extends JFrame {
 		contentPane.add(label);
 		
 		comboBox = new JComboBox();
+		comboBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange() == ItemEvent.SELECTED){
+					switch(comboBox.getSelectedIndex()){
+					case 0: { // buscar por id
+						dpBusqueda.setVisible(false);
+						txtBusqueda.setVisible(true);
+					} break;
+					case 1: { // buscar por fecha
+						dpBusqueda.setVisible(true);
+						txtBusqueda.setVisible(false);
+					} break;
+					case 2: { // buscar por id cliente
+						dpBusqueda.setVisible(false);
+						txtBusqueda.setVisible(true);
+					} break;
+					default: {
+						JOptionPane.showMessageDialog(null,"Opcion no valida...");
+					} break;
+					}
+				}
+			}
+		});
+		
+		
 		comboBox.setBounds(247, 151, 109, 20);
 		contentPane.add(comboBox);
 		comboBox.addItem("ID Pedido");
@@ -351,4 +404,9 @@ public class PedidoEA extends JFrame {
 		contentPane.add(ftxtFPedido);
 		
 	}
+	
+	static private String selectedString(ItemSelectable is) {
+	    Object selected[] = is.getSelectedObjects();
+	    return ((selected.length == 0) ? "null" : (String) selected[0]);
+	  }
 }
