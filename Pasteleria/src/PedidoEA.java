@@ -55,8 +55,11 @@ public class PedidoEA extends JFrame {
 	private JFormattedTextField ftxtFecha=null;
 	private JFormattedTextField ftxtFPedido=null;
 	private JDatePickerImpl dpBusqueda;
+	private JDatePickerImpl dpFechaPedido;
 	private JDatePanelImpl dpBusquedaPanel;
+	private JDatePanelImpl dpFechaPedidoPanel;
 	private UtilDateModel dpBusquedaModel;
+	private UtilDateModel dpFechaPedidoModel;
 
 	public void MascaraFecha(){
 		MaskFormatter Mascara=null;
@@ -169,26 +172,17 @@ public class PedidoEA extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				try{
-					dia=Integer.parseInt(ftxtFecha.getText().substring(0,2));
-					dia=Integer.parseInt(ftxtFPedido.getText().substring(0,2));
-					mes=Integer.parseInt(ftxtFecha.getText().substring(3,5));
-					mes=Integer.parseInt(ftxtFPedido.getText().substring(3,5));
-					
-					if(dia>0 && dia<=31 && mes>0 && mes<=12){
-						
-					}else{
-						JOptionPane.showMessageDialog(null,"Fecha Incorrecta...");
-					}
+					Date selectedDate = (Date)dpFechaPedido.getModel().getValue();
 					String sql="INSERT INTO PasteleriaDBA.Pedido(StatusPedido, ProductoID, ClienteID, FechaPedido, AbonoPedido, TotalPedido) values(?,?,?,?,?,?)";
 					PreparedStatement pst=DerbyConnection.DbStart().prepareStatement(sql);
 					pst.setString(1,txtStatus.getText());
-					pst.setString(2,txtProducto.getText());
-					pst.setString(3,txtCliente.getText());
-					pst.setString(4,ftxtFPedido.getText());
-					pst.setString(5,txtAbono.getText());
-					pst.setString(6,txtTotal.getText());
+					pst.setInt(2,Integer.parseInt(txtProducto.getText()));
+					pst.setInt(3,Integer.parseInt(txtCliente.getText()));
+					pst.setDate(4,new java.sql.Date(selectedDate.getTime()));
+					pst.setDouble(5,Double.parseDouble(txtAbono.getText()));
+					pst.setDouble(6,Double.parseDouble(txtTotal.getText()));
 					
-					pst.executeUpdate(sql);
+					pst.execute();
 											
 					JOptionPane.showMessageDialog(null,"Pedido Guardado...");
 					
@@ -344,6 +338,13 @@ public class PedidoEA extends JFrame {
 		dpBusqueda.setLocation(380, 151);
 		contentPane.add(dpBusqueda);
 		dpBusqueda.setVisible(false);
+		
+		dpFechaPedidoModel = new UtilDateModel();
+		dpFechaPedidoPanel = new JDatePanelImpl(dpFechaPedidoModel, p); 
+		dpFechaPedido = new JDatePickerImpl(dpFechaPedidoPanel, new DateLabelFormatter());
+		dpFechaPedido.setSize(121, 20);
+		dpFechaPedido.setLocation(105, 313);
+		contentPane.add(dpFechaPedido);
 		
 		txtCliente = new JTextField();
 		txtCliente.setBounds(106, 288, 86, 20);
