@@ -35,16 +35,18 @@ public class DerbyConnection {
 					index++;
 				}
 				if (Usuario.contains("ADMINISTRADORSCHEMA")){
+					 JOptionPane.showMessageDialog (null, "Bienvenido Administrador");
 					 InicioAdministrador FInicioAdm= new InicioAdministrador();
 					 FInicioAdm.setVisible(true);
 					 loginSuccess = true;
 				 }
 				 else if(Usuario.contains("EMPLEADOSCHEMA")){
-					 InicioEmpleado FInicioEmp= new InicioEmpleado();
-					 FInicioEmp.setVisible(true);
+					 InicioEmpleado FLogin= new InicioEmpleado();
+					 FLogin.setVisible(true);
 					 loginSuccess = true;
 				 }
 				 else if(Usuario.contains("CLIENTESCHEMA")){
+					 JOptionPane.showMessageDialog(null, "Bienvenido Cliente");
 					 InicioCliente FInicioCl= new InicioCliente();
 					 FInicioCl.setVisible(true);
 					 loginSuccess = true;
@@ -90,5 +92,3 @@ public class DerbyConnection {
 	}
 }
 		
-
-

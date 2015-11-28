@@ -1,4 +1,3 @@
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -11,12 +10,15 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import java.awt.Color;
-import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class InicioAdministrador extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
 	/**
@@ -39,7 +41,7 @@ public class InicioAdministrador extends JFrame {
 	 * Create the frame.
 	 */
 	public InicioAdministrador() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Heleine Scutt\\workspace\\Pasteleria0\\src\\Img\\cakeP.png"));
+		setIconImage(new ImageIcon(this.getClass().getResource("/Img/cakeP.png")).getImage());
 		setForeground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 619, 312);
@@ -50,6 +52,12 @@ public class InicioAdministrador extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton btnProducto = new JButton("Producto");
+		btnProducto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ProductoA FProducto= new ProductoA();
+				FProducto.setVisible(true);
+			}
+		});
 		btnProducto.setBackground(Color.WHITE);
 		Image imgPro = new ImageIcon(this.getClass().getResource("/Img/Prod.png")).getImage();
 		btnProducto.setIcon(new ImageIcon(imgPro));
@@ -60,7 +68,7 @@ public class InicioAdministrador extends JFrame {
 		JButton btnPedido = new JButton("Pedido");
 		btnPedido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PedidoEA FPedido= new PedidoEA();
+				PedidoA FPedido= new PedidoA();
 				FPedido.setVisible(true);
 			}
 		});
@@ -72,6 +80,12 @@ public class InicioAdministrador extends JFrame {
 		contentPane.add(btnPedido);
 		
 		JButton btnCliente = new JButton("Cliente");
+		btnCliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ClienteA FCliente= new ClienteA();
+				FCliente.setVisible(true);
+			}
+		});
 		btnCliente.setBackground(Color.WHITE);
 		Image imgcl = new ImageIcon(this.getClass().getResource("/Img/client.png")).getImage();
 		btnCliente.setIcon(new ImageIcon(imgcl));
@@ -88,6 +102,12 @@ public class InicioAdministrador extends JFrame {
 		contentPane.add(btnFacturas);
 		
 		JButton btnLista = new JButton("Lista");
+		btnLista.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListaA FLista= new ListaA();
+				FLista.setVisible(true);
+			}
+		});
 		btnLista.setBackground(Color.WHITE);
 		Image imgLis = new ImageIcon(this.getClass().getResource("/Img/list.png")).getImage();
 		btnLista.setIcon(new ImageIcon(imgLis));
@@ -96,6 +116,12 @@ public class InicioAdministrador extends JFrame {
 		contentPane.add(btnLista);
 		
 		JButton btnUsuario = new JButton("Usuario");
+		btnUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				UsuarioA FUsuario= new UsuarioA();
+				FUsuario.setVisible(true);
+			}
+		});
 		btnUsuario.setBackground(Color.WHITE);
 		Image imgUs = new ImageIcon(this.getClass().getResource("/Img/Users.png")).getImage();
 		btnUsuario.setIcon(new ImageIcon(imgUs));

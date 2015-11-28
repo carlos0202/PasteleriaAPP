@@ -1,4 +1,3 @@
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -6,6 +5,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTable;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import java.awt.Font;
@@ -14,15 +14,18 @@ import org.eclipse.wb.swing.FocusTraversalOnArray;
 import net.proteanit.sql.DbUtils;
 
 import java.awt.Component;
-import java.awt.Window.Type;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class Producto extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable table;
 	public static DerbyConnection Dbc;
@@ -48,10 +51,12 @@ public class Producto extends JFrame {
 	 */
 	public Producto() {
 		setTitle("Productos");
+		setIconImage(new ImageIcon(this.getClass().getResource("/Img/cakeP.png")).getImage());
 		getContentPane().setFont(new Font("Times New Roman", Font.BOLD| Font.ITALIC, 18));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 534, 354);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -77,16 +82,16 @@ public class Producto extends JFrame {
 				FInicioCl.setVisible(true);
 			}
 		});
-		btnInicio.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 16));
-		btnInicio.setBounds(20, 269, 90, 46);
+		btnInicio.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
+		btnInicio.setBounds(20, 269, 71, 27);
 		contentPane.add(btnInicio);
 					
 		JButton btnProductos = new JButton("Productos");
 		btnProductos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
-					String sql="select * from PasteleriaDBA.Producto";
-					PreparedStatement pst=Dbc.DbStart().prepareStatement(sql);
+					String sql="select NombreProducto, DescripcionProducto, PrecioProducto from PasteleriaDBA.Producto";
+					PreparedStatement pst=DerbyConnection.DbStart().prepareStatement(sql);
 					ResultSet rs=pst.executeQuery();
 					table.setModel(DbUtils.resultSetToTableModel(rs));
 				}catch(Exception ex){
@@ -94,8 +99,8 @@ public class Producto extends JFrame {
 				}
 			}
 		});
-		btnProductos.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 16));
-		btnProductos.setBounds(207, 24, 124, 27);
+		btnProductos.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
+		btnProductos.setBounds(208, 38, 99, 27);
 		contentPane.add(btnProductos);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{contentPane, panel, scrollPane, table, btnInicio, btnProductos}));
 	}

@@ -4,7 +4,6 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.Toolkit;
 import java.awt.Color;
 
 
@@ -47,7 +46,7 @@ public class Login {
 		FLogin = new JFrame("Inicio de Sesion");
 		FLogin.getContentPane().setBackground(Color.WHITE);
 		FLogin.setForeground(Color.WHITE);
-		FLogin.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Heleine Scutt\\workspace\\Pasteleria0\\src\\Img\\cakeP.png"));
+		FLogin.setIconImage(new ImageIcon(this.getClass().getResource("/Img/cakeP.png")).getImage());
 		FLogin.getContentPane().setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 18));
 		FLogin.setBounds(100, 100, 450, 300);
 		FLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -95,7 +94,7 @@ public class Login {
 				String pass = String.valueOf(passwordField.getPassword());
 				boolean success = login.MLogin(user, pass);
 				if(success){
-					FLogin.dispose();
+					//FLogin.dispose();
 				}
 				else{
 					JOptionPane.showMessageDialog(null,"Error al iniciar sesion. Revise sus datos...");

@@ -1,4 +1,3 @@
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -16,6 +15,10 @@ import java.awt.Color;
 
 public class InicioEmpleado extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
 	/**
@@ -53,7 +56,7 @@ public class InicioEmpleado extends JFrame {
 		btnProducto.setIcon(new ImageIcon(imgP));
 		btnProducto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Producto FProducto= new Producto();
+				ProductoE FProducto= new ProductoE();
 				FProducto.setVisible(true);	
 			}
 		});
@@ -67,7 +70,7 @@ public class InicioEmpleado extends JFrame {
 		btnPedido.setIcon(new ImageIcon(imgPd));
 		btnPedido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PedidoEA FPedido= new PedidoEA();
+				PedidoA FPedido= new PedidoA();
 				FPedido.setVisible(true);
 			}
 		});
@@ -76,6 +79,12 @@ public class InicioEmpleado extends JFrame {
 		contentPane.add(btnPedido);
 		
 		JButton btnLista = new JButton("Lista");
+		btnLista.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListaA FLista= new ListaA();
+				FLista.setVisible(true);
+			}
+		});
 		btnLista.setBackground(Color.WHITE);
 		Image imgLis = new ImageIcon(this.getClass().getResource("/Img/list.png")).getImage();
 		btnLista.setIcon(new ImageIcon(imgLis));
@@ -87,6 +96,8 @@ public class InicioEmpleado extends JFrame {
 		btnCliente.setBackground(new Color(255, 255, 255));
 		btnCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ClienteA FCliente= new ClienteA();
+				FCliente.setVisible(true);
 			}
 		});
 		Image imgCl = new ImageIcon(this.getClass().getResource("/Img/client.png")).getImage();

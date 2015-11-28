@@ -2,7 +2,6 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.ItemSelectable;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -50,8 +49,7 @@ public class PedidoEA extends JFrame {
 	private JTextField txtAbono;
 	private JTextField txtTotal;
 	private JTextField txtBusqueda;
-	private JComboBox comboBox;
-	private int dia=0,mes=0;
+	private JComboBox<String> comboBox;
 	private JFormattedTextField ftxtFecha=null;
 	private JFormattedTextField ftxtFPedido=null;
 	private JDatePickerImpl dpBusqueda;
@@ -103,7 +101,6 @@ public class PedidoEA extends JFrame {
 	 */
 	public PedidoEA() {
 		setIconImage(new ImageIcon(this.getClass().getResource("/Img/cakeP.png")).getImage());
-		//setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Heleine Scutt\\workspace\\Pasteleria0\\src\\Img\\cakeP.png"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 820, 478);
 		contentPane = new JPanel();
@@ -120,7 +117,7 @@ public class PedidoEA extends JFrame {
 		scrollPane.setViewportView(table);
 		table.setBackground(SystemColor.inactiveCaptionBorder);
 		
-		Connection= new DerbyConnection();
+		//Connection= new DerbyConnection();
 				
 		JButton btnInicio = new JButton("Inicio");
 		btnInicio.addActionListener(new ActionListener() {
@@ -379,7 +376,7 @@ public class PedidoEA extends JFrame {
 		label.setBounds(22, 11, 214, 168);
 		contentPane.add(label);
 		
-		comboBox = new JComboBox();
+		comboBox = new JComboBox<String>();
 		comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if(e.getStateChange() == ItemEvent.SELECTED){
@@ -416,9 +413,4 @@ public class PedidoEA extends JFrame {
 		contentPane.add(ftxtFPedido);
 		
 	}
-	
-	static private String selectedString(ItemSelectable is) {
-	    Object selected[] = is.getSelectedObjects();
-	    return ((selected.length == 0) ? "null" : (String) selected[0]);
-	  }
 }
