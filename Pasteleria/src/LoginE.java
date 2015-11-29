@@ -25,6 +25,7 @@ public class LoginE extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtID;
 	private JPasswordField passwordField;
+	public static LoginE _instance;
 
 	/**
 	 * Launch the application.
@@ -45,7 +46,7 @@ public class LoginE extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public LoginE() {
+	private LoginE() {
 		setIconImage(new ImageIcon(this.getClass().getResource("/Img/cakeP.png")).getImage());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 235, 177);
@@ -109,5 +110,12 @@ public class LoginE extends JFrame {
 		btnLogin.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
 		btnLogin.setBounds(69, 107, 89, 23);
 		contentPane.add(btnLogin);
+	}
+	public static LoginE getInstance(){
+		if(_instance == null){
+			_instance = new LoginE();
+		}
+		
+		return _instance;
 	}
 }

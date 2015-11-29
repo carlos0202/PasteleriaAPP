@@ -14,6 +14,8 @@ import java.awt.event.ItemEvent;
 import java.sql.*;
 import java.awt.event.ActionEvent;
 import javax.swing.border.TitledBorder;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class PedidoA extends JFrame {
 
@@ -42,6 +44,7 @@ public class PedidoA extends JFrame {
 	private JButton btnAgregar;
 	private JButton btnActualizar;
 	private JButton btnLista;
+	public static PedidoA _instance;
 
 	/**
 	 * Launch the application.
@@ -62,7 +65,7 @@ public class PedidoA extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public PedidoA() {
+	private PedidoA() {
 		setIconImage(new ImageIcon(this.getClass().getResource("/Img/cakeP.png")).getImage());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 708, 478);
@@ -394,7 +397,26 @@ public class PedidoA extends JFrame {
 		});
 		btnLista.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
 		
+		JLabel lblInicio = new JLabel("Inicio");
+		lblInicio.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				InicioAdministrador.getInstance().setVisible(true);
+				InicioEmpleado.getInstance().setVisible(true);
+			}
+		});
+		lblInicio.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
+		lblInicio.setBounds(643, 408, 39, 20);
+		contentPane.add(lblInicio);
+		
 		dpBusqueda.setVisible(false);
 		
+	}
+	public static PedidoA getInstance(){
+		if(_instance == null){
+			_instance = new PedidoA();
+		}
+		
+		return _instance;
 	}
 	}

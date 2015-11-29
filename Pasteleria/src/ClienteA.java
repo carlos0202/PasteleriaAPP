@@ -40,6 +40,7 @@ public class ClienteA extends JFrame {
 	private JTextField txtBusqueda;
 	private JTable table;
 	private JComboBox<String> comboBox;
+	public static ClienteA _instance;
 
 	/**
 	 * Launch the application.
@@ -60,7 +61,7 @@ public class ClienteA extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ClienteA() {
+	private ClienteA() {
 		setTitle("Cliente");
 		setIconImage(new ImageIcon(this.getClass().getResource("/Img/cakeP.png")).getImage());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -319,5 +320,12 @@ public class ClienteA extends JFrame {
 		JSeparator separator_2 = new JSeparator();
 		separator_2.setBounds(6, 16, 677, 181);
 		panel_3.add(separator_2);
+	}
+	public static ClienteA getInstance(){
+		if(_instance == null){
+			_instance = new ClienteA();
+		}
+		
+		return _instance;
 	}
 }

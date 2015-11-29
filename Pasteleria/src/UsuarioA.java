@@ -36,6 +36,7 @@ public class UsuarioA extends JFrame {
 	private JTable table;
 	private JTextField txtBusqueda;
 	private JComboBox<String> comboBox;
+	public static UsuarioA _instance;
 
 	/**
 	 * Launch the application.
@@ -56,7 +57,7 @@ public class UsuarioA extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public UsuarioA() {
+	private UsuarioA() {
 		setTitle("Usuarios");
 		setIconImage(new ImageIcon(this.getClass().getResource("/Img/cakeP.png")).getImage());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -236,5 +237,12 @@ public class UsuarioA extends JFrame {
 		JSeparator separator_2 = new JSeparator();
 		separator_2.setBounds(6, 16, 415, 221);
 		panel_2.add(separator_2);
+	}
+	public static UsuarioA getInstance(){
+		if(_instance == null){
+			_instance = new UsuarioA();
+		}
+		
+		return _instance;
 	}
 }

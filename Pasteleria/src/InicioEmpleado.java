@@ -7,6 +7,9 @@ import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionListener;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.util.Calendar;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -71,8 +74,7 @@ public class InicioEmpleado extends JFrame {
 		btnPedido.setIcon(new ImageIcon(imgPd));
 		btnPedido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PedidoA FPedido= new PedidoA();
-				FPedido.setVisible(true);
+				PedidoA.getInstance().setVisible(true);
 			}
 		});
 		btnPedido.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 14));
@@ -96,8 +98,7 @@ public class InicioEmpleado extends JFrame {
 		btnCliente.setBackground(new Color(255, 255, 255));
 		btnCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ClienteA FCliente= new ClienteA();
-				FCliente.setVisible(true);
+				ClienteA.getInstance().setVisible(true);
 			}
 		});
 		Image imgCl = new ImageIcon(this.getClass().getResource("/Img/client.png")).getImage();
@@ -119,6 +120,15 @@ public class InicioEmpleado extends JFrame {
 		label.setIcon(new ImageIcon(imglogo));
 		label.setBounds(10, 32, 189, 191);
 		contentPane.add(label);
+		
+		JLabel Hora = new JLabel("");
+		Hora.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
+		Hora.setBounds(529, 11, 57, 22);
+		contentPane.add(Hora);
+		Calendar cal = Calendar.getInstance(); 
+		Date fecha = (Date) cal.getTime(); 
+		DateFormat formatter = DateFormat.getTimeInstance(); 
+		Hora.setText( formatter.format( fecha ) ); 
 	}
 	
 	public static InicioEmpleado getInstance(){

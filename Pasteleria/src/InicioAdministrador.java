@@ -68,8 +68,7 @@ public class InicioAdministrador extends JFrame {
 		JButton btnPedido = new JButton("Pedido");
 		btnPedido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PedidoA FPedido= new PedidoA();
-				FPedido.setVisible(true);
+				PedidoA.getInstance().setVisible(true);
 			}
 		});
 		btnPedido.setBackground(Color.WHITE);
@@ -82,8 +81,7 @@ public class InicioAdministrador extends JFrame {
 		JButton btnCliente = new JButton("Cliente");
 		btnCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ClienteA FCliente= new ClienteA();
-				FCliente.setVisible(true);
+				ClienteA.getInstance().setVisible(true);
 			}
 		});
 		btnCliente.setBackground(Color.WHITE);
@@ -117,8 +115,7 @@ public class InicioAdministrador extends JFrame {
 		JButton btnUsuario = new JButton("Usuario");
 		btnUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				UsuarioA FUsuario= new UsuarioA();
-				FUsuario.setVisible(true);
+				UsuarioA.getInstance().setVisible(true);
 			}
 		});
 		btnUsuario.setBackground(Color.WHITE);

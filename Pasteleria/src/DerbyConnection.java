@@ -41,7 +41,7 @@ public class DerbyConnection {
 				 }
 				 else if(Usuario.contains("EMPLEADOSCHEMA")){
 					 loginSuccess = true;
-					 InicioEmpleado.getInstance().setVisible(true);
+					 LoginE.getInstance().setVisible(true);
 				 }
 				 else if(Usuario.contains("CLIENTESCHEMA")){
 					 JOptionPane.showMessageDialog(null, "Bienvenido Cliente");
