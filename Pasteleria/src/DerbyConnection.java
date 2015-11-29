@@ -34,6 +34,8 @@ public class DerbyConnection {
 					Usuario.add(rs.getString(1));
 					index++;
 				}
+			OperacionesComunes.getInstance().setPermisos(Usuario);
+			OperacionesComunes.getInstance().setUsuarioLogueado(user);
 				if (Usuario.contains("ADMINISTRADORSCHEMA")){
 					 JOptionPane.showMessageDialog (null, "Bienvenido Administrador");
 					 loginSuccess = true;

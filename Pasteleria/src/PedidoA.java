@@ -401,8 +401,8 @@ public class PedidoA extends JFrame {
 		lblInicio.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				InicioAdministrador.getInstance().setVisible(true);
-				InicioEmpleado.getInstance().setVisible(true);
+				_instance.setVisible(false);
+				OperacionesComunes.getInstance().irMenuPrincipal();
 			}
 		});
 		lblInicio.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
