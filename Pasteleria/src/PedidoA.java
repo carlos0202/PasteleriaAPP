@@ -8,8 +8,9 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import net.proteanit.sql.DbUtils;
-
+import java.awt.event.ItemListener;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 import java.sql.*;
 import java.awt.event.ActionEvent;
 import javax.swing.border.TitledBorder;
@@ -116,6 +117,7 @@ public class PedidoA extends JFrame {
 		contentPane.add(lblTotal);
 		
 		txtID = new JTextField();
+		txtID.setEditable(false);
 		txtID.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		txtID.setBounds(45, 51, 46, 20);
 		contentPane.add(txtID);
@@ -167,9 +169,6 @@ public class PedidoA extends JFrame {
 		txtTotal.setBounds(428, 78, 86, 20);
 		contentPane.add(txtTotal);
 		txtTotal.setColumns(10);
-		ftxtFPedido = new JFormattedTextField();
-		ftxtFPedido.setBounds(105, 78, 87, 20);
-		contentPane.add(ftxtFPedido);
 		
 		btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener(new ActionListener() {
@@ -203,6 +202,30 @@ public class PedidoA extends JFrame {
 		btnActualizar = new JButton("Actualizar");
 		btnActualizar.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
 		btnActualizar.setBounds(530, 79, 89, 23);
+		btnActualizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try{
+ 					DatosUsuario.getInstance().getUserName();
+					java.util.Date selectedDate = (java.util.Date)dpFechaPedido.getModel().getValue();
+					String sql = "update PasteleriaDBA.Pedido set StatusPedido=?, ProductoID=?, ClienteID=?,"+		
+							" FechaPedido=?, AbonoPedido=?, TotalPedido=? where PedidoID=?";
+
+ 					PreparedStatement pst=DerbyConnection.DbStart().prepareStatement(sql);
+					pst.setString(1,txtStatus.getText());
+					pst.setInt(2,Integer.parseInt(txtProducto.getText()));
+					pst.setInt(3,Integer.parseInt(txtCliente.getText()));
+					pst.setDate(4,new java.sql.Date(selectedDate.getTime()));
+					pst.setDouble(5,Double.parseDouble(txtAbono.getText()));
+					pst.setDouble(6,Double.parseDouble(txtTotal.getText()));
+					pst.setInt(7, Integer.parseInt(txtID.getText()));
+					pst.execute();
+ 				
+ 					JOptionPane.showMessageDialog(null,"Pedido Actualizado...");
+				}catch(Exception ex){
+					JOptionPane.showMessageDialog(null, "Error al actualizar datos de pedido");
+				}
+			}
+		});
 		contentPane.add(btnActualizar);
 		
 		JPanel panel = new JPanel();
@@ -228,7 +251,14 @@ public class PedidoA extends JFrame {
 		panel_1.add(separator_1);
 		
 		comboBox = new JComboBox<String>();
-		/*comboBox.addItemListener(new ItemListener() {
+		comboBox.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
+		
+		comboBox.addItem("ID Pedido");
+		comboBox.addItem("Fecha");
+		comboBox.addItem("ID Cliente");
+		comboBox.setBounds(29, 33, 109, 20);
+		comboBox.addItemListener(new ItemListener() {
+			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if(e.getStateChange() == ItemEvent.SELECTED){
 					switch(comboBox.getSelectedIndex()){
@@ -250,14 +280,10 @@ public class PedidoA extends JFrame {
 					}
 				}
 			}
-		});*/
-		comboBox.setBounds(29, 33, 109, 20);
-		panel_1.add(comboBox);
-		comboBox.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
+		});
 		
-		comboBox.addItem("ID Pedido");
-		comboBox.addItem("Fecha");
-		comboBox.addItem("ID Cliente");
+		panel_1.add(comboBox);
+		
 		
 		txtBusqueda = new JTextField();
 		txtBusqueda.setBounds(187, 33, 86, 20);
@@ -270,8 +296,73 @@ public class PedidoA extends JFrame {
 		
 		JButton btnBuscar = new JButton("Buscar");
 		btnBuscar.setBounds(407, 32, 89, 23);
-		panel_1.add(btnBuscar);
 		btnBuscar.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
+		btnBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try{
+					switch(comboBox.getSelectedIndex()){
+						case 0: { // buscar por id
+							String statusPedido="";
+							Integer pedidoId=0, productoId=0, clienteID=0;
+							Double abonoPedido=0.0, TotalPedido=0.0;
+							Date fechaPedido = new Date(0);
+							String sql="select * from PasteleriaDBA.Pedido where PedidoID=?";
+							PreparedStatement pst=DerbyConnection.DbStart().prepareStatement(sql);
+							PreparedStatement cp=DerbyConnection.DbStart().prepareStatement(sql);
+							pst.setInt(1,Integer.parseInt(txtBusqueda.getText()));
+							ResultSet rs= pst.executeQuery();							
+							table.setModel(DbUtils.resultSetToTableModel(rs));
+							
+							cp.setInt(1,Integer.parseInt(txtBusqueda.getText()));
+							ResultSet copy = cp.executeQuery();
+							while(copy.next()){
+								pedidoId = copy.getInt("PEDIDOID");
+								statusPedido = copy.getString("STATUSPEDIDO");
+								productoId = copy.getInt("PRODUCTOID");
+								clienteID = copy.getInt("CLIENTEID");
+								fechaPedido = copy.getDate("FECHAPEDIDO");
+								abonoPedido = copy.getDouble("ABONOPEDIDO");
+								TotalPedido = copy.getDouble("TOTALPEDIDO");
+							}
+							cp.close();
+							pst.close();
+							txtID.setText(pedidoId.toString());
+							txtStatus.setText(statusPedido);
+							txtProducto.setText(productoId.toString());
+							txtCliente.setText(clienteID.toString());
+							dpFechaPedidoModel.setValue(new java.util.Date(fechaPedido.getTime()));
+							dpFechaPedidoPanel.updateUI();
+							dpFechaPedido.updateUI();
+							txtAbono.setText(abonoPedido.toString());
+							txtTotal.setText(TotalPedido.toString());
+							
+						} break;
+						case 1: { // buscar por fecha
+							String sql="select * from PasteleriaDBA.Pedido where Fecha=?";
+							PreparedStatement pst=DerbyConnection.DbStart().prepareStatement(sql);
+							pst.setString(1,txtBusqueda.getText());
+							ResultSet rs= pst.executeQuery();							
+							table.setModel(DbUtils.resultSetToTableModel(rs));
+						} break;
+						case 2: { // buscar por id cliente
+							String sql="select * from PasteleriaDBA.Pedido where ClienteID=?";
+							PreparedStatement pst=DerbyConnection.DbStart().prepareStatement(sql);
+							pst.setInt(1,Integer.parseInt(txtBusqueda.getText()));
+							ResultSet rs= pst.executeQuery();							
+							table.setModel(DbUtils.resultSetToTableModel(rs));
+						} break;
+						default: {
+							JOptionPane.showMessageDialog(null,"Opcion no valida...");
+						} break;
+					}
+										
+				}catch(Exception ex){
+					JOptionPane.showMessageDialog(null,"Pedido no se encuentra, datos invalidos...");
+				}
+			}
+		});
+		panel_1.add(btnBuscar);
+		
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(Color.WHITE);
@@ -302,41 +393,7 @@ public class PedidoA extends JFrame {
 			}
 		});
 		btnLista.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
-		btnBuscar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try{
-					switch(comboBox.getSelectedIndex()){
-						case 0: { // buscar por id
-							String sql="select * from PasteleriaDBA.Pedido where PedidoID=?";
-							PreparedStatement pst=DerbyConnection.DbStart().prepareStatement(sql);
-							pst.setInt(1,Integer.parseInt(txtBusqueda.getText()));
-							ResultSet rs= pst.executeQuery();
-							table.setModel(DbUtils.resultSetToTableModel(rs));
-						} break;
-						case 1: { // buscar por fecha
-							String sql="select * from PasteleriaDBA.Pedido where Fecha=?";
-							PreparedStatement pst=DerbyConnection.DbStart().prepareStatement(sql);
-							pst.setString(1,txtBusqueda.getText());
-							ResultSet rs= pst.executeQuery();							
-							table.setModel(DbUtils.resultSetToTableModel(rs));
-						} break;
-						case 2: { // buscar por id cliente
-							String sql="select * from PasteleriaDBA.Pedido where ClienteID=?";
-							PreparedStatement pst=DerbyConnection.DbStart().prepareStatement(sql);
-							pst.setInt(1,Integer.parseInt(txtBusqueda.getText()));
-							ResultSet rs= pst.executeQuery();							
-							table.setModel(DbUtils.resultSetToTableModel(rs));
-						} break;
-						default: {
-							JOptionPane.showMessageDialog(null,"Opcion no valida...");
-						} break;
-					}
-										
-				}catch(Exception ex){
-					JOptionPane.showMessageDialog(null,"Pedido no se encuentra, datos invalidos...");
-				}
-			}
-		});
+		
 		dpBusqueda.setVisible(false);
 		
 	}
