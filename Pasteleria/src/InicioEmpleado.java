@@ -45,7 +45,8 @@ public class InicioEmpleado extends JFrame {
 	 * Create the frame.
 	 */
 	private InicioEmpleado() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Heleine Scutt\\workspace\\Pasteleria0\\src\\Img\\cakeP.png"));
+/*		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Heleine Scutt\\workspace\\Pasteleria0\\src\\Img\\cakeP.png"));*/
+		setIconImage(new ImageIcon(this.getClass().getResource("/Img/cakeP.png")).getImage());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 612, 303);
 		contentPane = new JPanel();
@@ -126,7 +127,7 @@ public class InicioEmpleado extends JFrame {
 		Hora.setBounds(529, 11, 57, 22);
 		contentPane.add(Hora);
 		Calendar cal = Calendar.getInstance(); 
-		Date fecha = (Date) cal.getTime(); 
+		java.util.Date fecha = (java.util.Date) cal.getTime(); 
 		DateFormat formatter = DateFormat.getTimeInstance(); 
 		Hora.setText( formatter.format( fecha ) ); 
 	}
