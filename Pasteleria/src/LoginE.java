@@ -93,8 +93,7 @@ public class LoginE extends JFrame {
 						count=count+1;
 					}
 					if(count==1){
-						InicioEmpleado FInicioE= new InicioEmpleado();
-						FInicioE.setVisible(true);
+						InicioEmpleado.getInstance().setVisible(true);
 					}
 					else {
 						JOptionPane.showMessageDialog(null,"Favor verificar su ID o Password");

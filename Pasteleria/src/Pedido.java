@@ -132,8 +132,7 @@ public class Pedido extends JFrame {
 		btnInicio.setBackground(Color.WHITE);
 		btnInicio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				InicioCliente FInicioCl=new InicioCliente();
-				FInicioCl.setVisible(true);
+				InicioCliente.getInstance().setVisible(true);
 			}
 		});
 		btnInicio.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 16));

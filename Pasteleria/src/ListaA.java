@@ -39,11 +39,12 @@ public class ListaA extends JFrame {
 	private JTextField txtBusqueda;
 	private JTable table;
 	private JComboBox<String> comboBox;
+	private static ListaA _instance;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -54,12 +55,12 @@ public class ListaA extends JFrame {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the frame.
 	 */
-	public ListaA() {
+	private ListaA() {
 		setTitle("Lista");
 		setIconImage(new ImageIcon(this.getClass().getResource("/Img/cakeP.png")).getImage());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -289,6 +290,14 @@ public class ListaA extends JFrame {
 		btnLista.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
 		btnLista.setBounds(231, 22, 89, 23);
 		panel_2.add(btnLista);
+	}
+	
+	public static ListaA getInstance(){
+		if(_instance == null){
+			_instance = new ListaA();
+		}
+		
+		return _instance;
 	}
 
 }

@@ -20,11 +20,11 @@ public class InicioAdministrador extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-
+	private static InicioAdministrador _instance;
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -35,12 +35,12 @@ public class InicioAdministrador extends JFrame {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the frame.
 	 */
-	public InicioAdministrador() {
+	private InicioAdministrador() {
 		setIconImage(new ImageIcon(this.getClass().getResource("/Img/cakeP.png")).getImage());
 		setForeground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -104,8 +104,7 @@ public class InicioAdministrador extends JFrame {
 		JButton btnLista = new JButton("Lista");
 		btnLista.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ListaA FLista= new ListaA();
-				FLista.setVisible(true);
+				ListaA.getInstance().setVisible(true);
 			}
 		});
 		btnLista.setBackground(Color.WHITE);
@@ -136,4 +135,11 @@ public class InicioAdministrador extends JFrame {
 		contentPane.add(label);
 	}
 
+	public static InicioAdministrador getInstance(){
+		if(_instance == null){
+			_instance = new InicioAdministrador();
+		}
+		
+		return _instance;
+	}
 }

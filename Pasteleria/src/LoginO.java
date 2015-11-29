@@ -25,7 +25,7 @@ public class LoginO extends JFrame {
 	private JTextField txtUsuario;
 	private JPasswordField passwordField;
 	public static DerbyConnection login;
-
+	public static LoginO _instance;
 	private JPanel contentPane;
 
 	/**
@@ -47,7 +47,7 @@ public class LoginO extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public LoginO() {
+	private LoginO() {
 		setTitle("Inicio Sesion");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -106,6 +106,7 @@ public class LoginO extends JFrame {
 				boolean success = login.MLogin(user, pass);
 				if(success){
 					//FLogin.dispose();
+					_instance.setVisible(false);
 				}
 				else{
 					JOptionPane.showMessageDialog(null,"Error al iniciar sesion. Revise sus datos...");
@@ -122,4 +123,12 @@ public class LoginO extends JFrame {
 		
 	}
 
+	public static LoginO getInstance(){
+		if(_instance == null){
+			_instance = new LoginO();
+		}
+		
+		return _instance;
+	}
+	
 }

@@ -78,8 +78,7 @@ public class Producto extends JFrame {
 		JButton btnInicio = new JButton("Inicio");
 		btnInicio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				InicioCliente FInicioCl=new InicioCliente();
-				FInicioCl.setVisible(true);
+				InicioCliente.getInstance().setVisible(true);
 			}
 		});
 		btnInicio.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));

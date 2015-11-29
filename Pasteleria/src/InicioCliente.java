@@ -20,11 +20,12 @@ public class InicioCliente extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-
+	private static InicioCliente _instance;
+	
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -35,12 +36,12 @@ public class InicioCliente extends JFrame {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the frame.
 	 */
-	public InicioCliente() {
+	private InicioCliente() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Heleine Scutt\\workspace\\Pasteleria0\\src\\Img\\cakeP.png"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -83,5 +84,13 @@ public class InicioCliente extends JFrame {
 		label.setIcon(new ImageIcon(imglogo));
 		label.setBounds(10, 32, 189, 191);
 		contentPane.add(label);
+	}
+	
+	public static InicioCliente getInstance(){
+		if(_instance == null){
+			_instance = new InicioCliente();
+		}
+		
+		return _instance;
 	}
 }

@@ -36,20 +36,17 @@ public class DerbyConnection {
 				}
 				if (Usuario.contains("ADMINISTRADORSCHEMA")){
 					 JOptionPane.showMessageDialog (null, "Bienvenido Administrador");
-					 InicioAdministrador FInicioAdm= new InicioAdministrador();
-					 FInicioAdm.setVisible(true);
 					 loginSuccess = true;
+					 InicioAdministrador.getInstance().setVisible(true);
 				 }
 				 else if(Usuario.contains("EMPLEADOSCHEMA")){
-					 InicioEmpleado FLogin= new InicioEmpleado();
-					 FLogin.setVisible(true);
 					 loginSuccess = true;
+					 InicioEmpleado.getInstance().setVisible(true);
 				 }
 				 else if(Usuario.contains("CLIENTESCHEMA")){
 					 JOptionPane.showMessageDialog(null, "Bienvenido Cliente");
-					 InicioCliente FInicioCl= new InicioCliente();
-					 FInicioCl.setVisible(true);
 					 loginSuccess = true;
+					 InicioCliente.getInstance().setVisible(true);
 				 }
 				 else {
 					 JOptionPane.showMessageDialog(null, "Contactarse con DBA usuario no existe.");

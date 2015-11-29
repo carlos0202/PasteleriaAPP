@@ -20,11 +20,12 @@ public class InicioEmpleado extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private static InicioEmpleado _instance;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -35,12 +36,12 @@ public class InicioEmpleado extends JFrame {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the frame.
 	 */
-	public InicioEmpleado() {
+	private InicioEmpleado() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Heleine Scutt\\workspace\\Pasteleria0\\src\\Img\\cakeP.png"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 612, 303);
@@ -81,8 +82,7 @@ public class InicioEmpleado extends JFrame {
 		JButton btnLista = new JButton("Lista");
 		btnLista.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ListaA FLista= new ListaA();
-				FLista.setVisible(true);
+				ListaA.getInstance().setVisible(true);
 			}
 		});
 		btnLista.setBackground(Color.WHITE);
@@ -119,5 +119,13 @@ public class InicioEmpleado extends JFrame {
 		label.setIcon(new ImageIcon(imglogo));
 		label.setBounds(10, 32, 189, 191);
 		contentPane.add(label);
+	}
+	
+	public static InicioEmpleado getInstance(){
+		if(_instance == null){
+			_instance = new InicioEmpleado();
+		}
+		
+		return _instance;
 	}
 }
