@@ -1,18 +1,24 @@
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
-
 public class OperacionesComunes {
 	private static OperacionesComunes _instance;
-	private ArrayList<String> permisos;
+	private ArrayList<String> Permisos;
 	private String usuarioLogueado;
+	private ArrayList<String> Nombres;
+	private int ID;
 	
 	private OperacionesComunes(){
-		permisos = new ArrayList<String>();
+		Permisos = new ArrayList<String>();
 	}
 	
 	public void setPermisos(ArrayList<String> permisos){
-		_instance.permisos = permisos;
+		_instance.Permisos = permisos;
+	}
+	public void setNombres(ArrayList<String> Nombres){
+		_instance.Nombres = Nombres;
+	}
+	public void setID(int ID){
+		_instance.ID = ID;
 	}
 	
 	public static OperacionesComunes getInstance(){
@@ -24,35 +30,40 @@ public class OperacionesComunes {
 	}
 	
 	public void irMenuPrincipal(){
-		if (permisos.contains("ADMINISTRADORSCHEMA")){
+		if (Permisos.contains("ADMINISTRADORSCHEMA")){
 			 InicioAdministrador.getInstance().setVisible(true);
 		 }
-		 else if(permisos.contains("EMPLEADOSCHEMA")){
-			 LoginE.getInstance().setVisible(true);
+		 else if(Permisos.contains("EMPLEADOSCHEMA")){
+			 InicioEmpleado.getInstance().setVisible(true);
 		 }
-		 else if(permisos.contains("CLIENTESCHEMA")){
+		 else if(Permisos.contains("CLIENTESCHEMA")){
 			 InicioCliente.getInstance().setVisible(true);
 		 }
 	}
 	
 	public ArrayList<String> getPermisos(){
-		return permisos;
+		return Permisos;
 	}
-	
+	public ArrayList<String> getNombres(){
+		return Nombres;
+	}
+	public int getID(){
+		return ID;
+	}
 	public boolean isAdministrador(){
-		return permisos.contains("ADMINISTRADORSCHEMA");
+		return Permisos.contains("ADMINISTRADORSCHEMA");
 	}
 	
 	public boolean isEmpleado(){
-		return permisos.contains("EMPLEADOSCHEMA");
+		return Permisos.contains("EMPLEADOSCHEMA");
 	}
 	
 	public boolean isCliente(){
-		return permisos.contains("CLIENTESCHEMA");
+		return Permisos.contains("CLIENTESCHEMA");
 	}
 	
 	public boolean isTipo(String tipo){
-		return permisos.contains(tipo);
+		return Permisos.contains(tipo);
 	}
 	
 	public void setUsuarioLogueado(String usuarioLogueado){

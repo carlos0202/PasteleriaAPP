@@ -1,5 +1,3 @@
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -54,8 +52,7 @@ public class InicioAdministrador extends JFrame {
 		JButton btnProducto = new JButton("Producto");
 		btnProducto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ProductoA FProducto= new ProductoA();
-				FProducto.setVisible(true);
+				ProductoA.getInstance().setVisible(true);
 			}
 		});
 		btnProducto.setBackground(Color.WHITE);
@@ -92,6 +89,11 @@ public class InicioAdministrador extends JFrame {
 		contentPane.add(btnCliente);
 		
 		JButton btnFacturas = new JButton("Facturas");
+		btnFacturas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FacturaA.getInstance().setVisible(true);
+			}
+		});
 		btnFacturas.setBackground(Color.WHITE);
 		Image imgFac= new ImageIcon(this.getClass().getResource("/Img/cash.png")).getImage();
 		btnFacturas.setIcon(new ImageIcon(imgFac));

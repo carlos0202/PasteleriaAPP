@@ -1,5 +1,3 @@
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -30,7 +28,7 @@ public class LoginE extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -41,7 +39,7 @@ public class LoginE extends JFrame {
 				}
 			}
 		});
-	}
+	} */
 
 	/**
 	 * Create the frame.
@@ -95,6 +93,7 @@ public class LoginE extends JFrame {
 					}
 					if(count==1){
 						InicioEmpleado.getInstance().setVisible(true);
+						_instance.dispose();
 					}
 					else {
 						JOptionPane.showMessageDialog(null,"Favor verificar su ID o Password");

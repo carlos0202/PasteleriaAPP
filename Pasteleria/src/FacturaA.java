@@ -9,6 +9,8 @@ import javax.swing.border.TitledBorder;
 import net.proteanit.sql.DbUtils;
 
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.awt.event.ActionEvent;
@@ -28,11 +30,12 @@ public class FacturaA extends JFrame {
 	private JTextField txtBusqueda;
 	private JTable table;
 	private JComboBox<String> comboBox;
+	public static FacturaA _instance;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -43,76 +46,92 @@ public class FacturaA extends JFrame {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the frame.
 	 */
-	public FacturaA() {
+	private FacturaA() {
 		setIconImage(new ImageIcon(this.getClass().getResource("/Img/cakeP.png")).getImage());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 662, 485);
+		setBounds(100, 100, 630, 485);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		JPanel panel = new JPanel();
+		panel.setForeground(new Color(0, 0, 0));
+		panel.setBackground(Color.WHITE);
+		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Actualizar", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBounds(4, 26, 599, 99);
+		contentPane.add(panel);
+		panel.setLayout(null);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBackground(new Color(255, 255, 255));
+		separator.setBounds(6, 16, 587, 76);
+		panel.add(separator);
+		
+		JLabel lblDetalle = new JLabel("Detalle ");
+		lblDetalle.setBounds(23, 74, 46, 14);
+		panel.add(lblDetalle);
+		lblDetalle.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
+		
+		txtDetalle = new JTextField();
+		txtDetalle.setBounds(68, 68, 382, 20);
+		panel.add(txtDetalle);
+		txtDetalle.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		txtDetalle.setColumns(10);
+		
 		JLabel lblIdFactura = new JLabel("ID Factura");
+		lblIdFactura.setBounds(23, 32, 73, 20);
+		panel.add(lblIdFactura);
 		lblIdFactura.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
-		lblIdFactura.setBounds(31, 40, 73, 20);
-		contentPane.add(lblIdFactura);
 		
 		txtID = new JTextField();
+		txtID.setBounds(87, 32, 35, 20);
+		panel.add(txtID);
 		txtID.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		txtID.setBounds(93, 40, 35, 20);
-		contentPane.add(txtID);
 		txtID.setColumns(10);
 		
 		JLabel lblIdPedido = new JLabel("ID Pedido");
+		lblIdPedido.setBounds(132, 34, 73, 17);
+		panel.add(lblIdPedido);
 		lblIdPedido.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
-		lblIdPedido.setBounds(134, 43, 73, 17);
-		contentPane.add(lblIdPedido);
 		
 		txtPedido = new JTextField();
+		txtPedido.setBounds(187, 32, 35, 20);
+		panel.add(txtPedido);
 		txtPedido.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		txtPedido.setBounds(191, 40, 35, 20);
-		contentPane.add(txtPedido);
 		txtPedido.setColumns(10);
 		
-		JLabel lblDetalle = new JLabel("Detalle ");
-		lblDetalle.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
-		lblDetalle.setBounds(31, 75, 46, 14);
-		contentPane.add(lblDetalle);
-		
-		txtDetalle = new JTextField();
-		txtDetalle.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		txtDetalle.setBounds(81, 71, 374, 20);
-		contentPane.add(txtDetalle);
-		txtDetalle.setColumns(10);
-		
 		JLabel lblDescuento = new JLabel("Descuento");
+		lblDescuento.setBounds(232, 34, 63, 17);
+		panel.add(lblDescuento);
 		lblDescuento.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
-		lblDescuento.setBounds(236, 43, 63, 17);
-		contentPane.add(lblDescuento);
 		
 		txtDEscuento = new JTextField();
+		txtDEscuento.setBounds(291, 32, 57, 20);
+		panel.add(txtDEscuento);
 		txtDEscuento.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		txtDEscuento.setBounds(293, 40, 57, 20);
-		contentPane.add(txtDEscuento);
 		txtDEscuento.setColumns(10);
 		
 		JLabel lblTotal = new JLabel("Total");
+		lblTotal.setBounds(358, 35, 46, 14);
+		panel.add(lblTotal);
 		lblTotal.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
-		lblTotal.setBounds(360, 43, 46, 14);
-		contentPane.add(lblTotal);
 		
 		txtTotal = new JTextField();
+		txtTotal.setBounds(387, 32, 63, 20);
+		panel.add(txtTotal);
 		txtTotal.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		txtTotal.setBounds(392, 40, 63, 20);
-		contentPane.add(txtTotal);
 		txtTotal.setColumns(10);
 		
 		JButton btnActualizar = new JButton("Actualizar");
+		btnActualizar.setBounds(477, 50, 89, 23);
+		panel.add(btnActualizar);
 		btnActualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
@@ -141,18 +160,6 @@ public class FacturaA extends JFrame {
 			}
 		});
 		btnActualizar.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
-		btnActualizar.setBounds(489, 55, 89, 23);
-		contentPane.add(btnActualizar);
-		
-		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Actualizar", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(4, 12, 599, 99);
-		contentPane.add(panel);
-		panel.setLayout(null);
-		
-		JSeparator separator = new JSeparator();
-		separator.setBounds(6, 16, 587, 76);
-		panel.add(separator);
 		
 		comboBox = new JComboBox<String>();
 		comboBox.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
@@ -218,8 +225,9 @@ public class FacturaA extends JFrame {
 		contentPane.add(btnBuscar);
 		
 		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(Color.WHITE);
 		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Buscar Factura", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_1.setBounds(4, 119, 595, 99);
+		panel_1.setBounds(8, 131, 595, 99);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -228,13 +236,14 @@ public class FacturaA extends JFrame {
 		panel_1.add(separator_1);
 		
 		JPanel panel_2 = new JPanel();
+		panel_2.setBackground(Color.WHITE);
 		panel_2.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Listado de Pedido", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_2.setBounds(6, 241, 593, 201);
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
 		
 		JSeparator separator_2 = new JSeparator();
-		separator_2.setBounds(6, 16, 583, 201);
+		separator_2.setBounds(6, 16, 577, 201);
 		panel_2.add(separator_2);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -262,5 +271,23 @@ public class FacturaA extends JFrame {
 		btnLista.setBounds(258, 25, 89, 23);
 		panel_2.add(btnLista);
 		btnLista.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
+		
+		JLabel lblInicio = new JLabel("Inicio");
+		lblInicio.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				_instance.setVisible(false);
+				OperacionesComunes.getInstance().irMenuPrincipal();
+			}
+		});
+		lblInicio.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
+		lblInicio.setBounds(560, 11, 39, 23);
+		contentPane.add(lblInicio);
+	}
+	public static FacturaA getInstance(){
+		if(_instance == null){
+			_instance = new FacturaA();
+		}
+		
+		return _instance;
 	}
 }

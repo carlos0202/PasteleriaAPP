@@ -1,5 +1,3 @@
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -7,13 +5,11 @@ import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionListener;
-import java.sql.Date;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import java.awt.Toolkit;
 import java.awt.Color;
 
 public class InicioEmpleado extends JFrame {
@@ -45,7 +41,7 @@ public class InicioEmpleado extends JFrame {
 	 * Create the frame.
 	 */
 	private InicioEmpleado() {
-/*		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Heleine Scutt\\workspace\\Pasteleria0\\src\\Img\\cakeP.png"));*/
+		setTitle("Inicio");
 		setIconImage(new ImageIcon(this.getClass().getResource("/Img/cakeP.png")).getImage());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 612, 303);
@@ -61,8 +57,7 @@ public class InicioEmpleado extends JFrame {
 		btnProducto.setIcon(new ImageIcon(imgP));
 		btnProducto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ProductoE FProducto= new ProductoE();
-				FProducto.setVisible(true);	
+				ProductoE.getInstance().setVisible(true);
 			}
 		});
 		btnProducto.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 14));
@@ -130,6 +125,12 @@ public class InicioEmpleado extends JFrame {
 		java.util.Date fecha = (java.util.Date) cal.getTime(); 
 		DateFormat formatter = DateFormat.getTimeInstance(); 
 		Hora.setText( formatter.format( fecha ) ); 
+		
+		JLabel Usuario = new JLabel("");
+		Usuario.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
+		Usuario.setBounds(448, 0, 57, 22);
+		contentPane.add(Usuario);
+		//Usuario.setText( rs.getString("NombreUsuario" ));
 	}
 	
 	public static InicioEmpleado getInstance(){

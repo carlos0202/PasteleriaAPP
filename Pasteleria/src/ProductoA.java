@@ -1,5 +1,3 @@
-import java.awt.EventQueue;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -20,6 +18,8 @@ import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.awt.event.ActionEvent;
@@ -51,11 +51,13 @@ public class ProductoA extends JFrame {
 	private JButton btnLista;
 	private JSeparator separator_2;
 	private JPanel panel_3;
+	private JLabel lblInicio;
+	public static ProductoA _instance;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -66,16 +68,16 @@ public class ProductoA extends JFrame {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the frame.
 	 */
-	public ProductoA() {
+	private ProductoA() {
 		setTitle("Producto");
 		setIconImage(new ImageIcon(this.getClass().getResource("/Img/cakeP.png")).getImage());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 701, 485);
+		setBounds(100, 100, 674, 485);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -166,6 +168,23 @@ public class ProductoA extends JFrame {
 		btnActualizar = new JButton("Actualizar");
 		btnActualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try{
+ 					DatosUsuario.getInstance().getUserName();
+					String sql = "update PasteleriaDBA.Producto set NombreProducto=?, CantidadProducto=?, DescripcionProducto=?,"+		
+							" PrecioProducto=? where ProductoID=?";
+
+ 					PreparedStatement pst=DerbyConnection.DbStart().prepareStatement(sql);
+ 					pst.setString(1,txtNombre.getText());
+ 					pst.setInt(2,Integer.parseInt(txtCantidad.getText()));
+					pst.setString(3,txtDescripcion.getText());					
+					pst.setDouble(4,Double.parseDouble(txtPrecio.getText()));
+					pst.setInt(5, Integer.parseInt(txtID.getText()));
+					pst.execute();
+ 				
+ 					JOptionPane.showMessageDialog(null,"Producto Actualizado...");
+				}catch(Exception ex){
+					JOptionPane.showMessageDialog(null, "Error al actualizar datos de producto");
+				}
 			}
 		});
 		btnActualizar.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
@@ -204,11 +223,33 @@ public class ProductoA extends JFrame {
 				try{
 					switch(comboBox.getSelectedIndex()){
 						case 0: { // buscar por Id
+							String Nombre="", Descripcion="";
+							Integer ProductoId=0, Cantidad=0;
+							Double Precio=0.0;
+							
 							String sql="select * from PasteleriaDBA.Producto where ProductoID=?";
 							PreparedStatement pst=DerbyConnection.DbStart().prepareStatement(sql);
-							pst.setString(1,txtBusqueda.getText());
-							ResultSet rs= pst.executeQuery();
+							PreparedStatement cp=DerbyConnection.DbStart().prepareStatement(sql);
+							pst.setInt(1,Integer.parseInt(txtBusqueda.getText()));
+							ResultSet rs= pst.executeQuery();							
 							table.setModel(DbUtils.resultSetToTableModel(rs));
+							
+							cp.setInt(1,Integer.parseInt(txtBusqueda.getText()));
+							ResultSet copy = cp.executeQuery();
+							while(copy.next()){
+								ProductoId = copy.getInt("PRODUCTOID");
+								Nombre= copy.getString("NOMBREPRODUCTO");
+								Descripcion = copy.getString("DESCRIPCIONPRODUCTO");
+								Cantidad = copy.getInt("CANTIDADPRODUCTO");
+								Precio = copy.getDouble("PRECIOPRODUCTO");
+							}
+							cp.close();
+							pst.close();
+							txtID.setText(ProductoId.toString());
+							txtNombre.setText(Nombre);
+							txtDescripcion.setText(Descripcion);
+							txtCantidad.setText(Cantidad.toString());
+							txtPrecio.setText(Precio.toString());
 						} break;
 						case 1: { // buscar por Nombre
 							String sql="select * from PasteleriaDBA.Producto where NombreProducto=?";
@@ -297,6 +338,24 @@ public class ProductoA extends JFrame {
 		btnLista.setBounds(267, 171, 89, 23);
 		panel_3.add(btnLista);
 		btnLista.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
+		
+		lblInicio = new JLabel("Inicio");
+		lblInicio.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				_instance.setVisible(false);
+				OperacionesComunes.getInstance().irMenuPrincipal();
+			}
+		});
+		lblInicio.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
+		lblInicio.setBounds(597, 0, 46, 25);
+		contentPane.add(lblInicio);
+	}
+	public static ProductoA getInstance(){
+		if(_instance == null){
+			_instance = new ProductoA();
+		}
+		
+		return _instance;
 	}
 
 }

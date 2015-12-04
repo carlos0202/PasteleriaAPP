@@ -34,7 +34,6 @@ public class PedidoA extends JFrame {
 	private JTextField txtTotal;
 	private JTextField txtBusqueda;
 	private JComboBox<String> comboBox;
-	private JFormattedTextField ftxtFPedido=null;
 	private JDatePickerImpl dpBusqueda;
 	private JDatePickerImpl dpFechaPedido;
 	private JDatePanelImpl dpBusquedaPanel;
@@ -49,7 +48,7 @@ public class PedidoA extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -60,15 +59,16 @@ public class PedidoA extends JFrame {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the frame.
 	 */
 	private PedidoA() {
+		setTitle("Pedido");
 		setIconImage(new ImageIcon(this.getClass().getResource("/Img/cakeP.png")).getImage());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 708, 478);
+		setBounds(100, 100, 664, 478);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -234,7 +234,7 @@ public class PedidoA extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
 		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Agregar, Actualizar Pedido", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(4, 7, 632, 120);
+		panel.setBounds(0, 23, 632, 108);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -309,6 +309,7 @@ public class PedidoA extends JFrame {
 							Integer pedidoId=0, productoId=0, clienteID=0;
 							Double abonoPedido=0.0, TotalPedido=0.0;
 							Date fechaPedido = new Date(0);
+							
 							String sql="select * from PasteleriaDBA.Pedido where PedidoID=?";
 							PreparedStatement pst=DerbyConnection.DbStart().prepareStatement(sql);
 							PreparedStatement cp=DerbyConnection.DbStart().prepareStatement(sql);
@@ -406,7 +407,7 @@ public class PedidoA extends JFrame {
 			}
 		});
 		lblInicio.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
-		lblInicio.setBounds(643, 408, 39, 20);
+		lblInicio.setBounds(587, 11, 39, 14);
 		contentPane.add(lblInicio);
 		
 		dpBusqueda.setVisible(false);

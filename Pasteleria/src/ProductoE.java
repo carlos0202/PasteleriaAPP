@@ -1,5 +1,3 @@
-import java.awt.EventQueue;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -19,9 +17,12 @@ import net.proteanit.sql.DbUtils;
 
 import javax.swing.UIManager;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
 
 public class ProductoE extends JFrame {
 
@@ -33,11 +34,12 @@ public class ProductoE extends JFrame {
 	private JTextField txtBusqueda;
 	private JTable table;
 	private JComboBox<String> comboBox;
+	public static ProductoE _instance;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -48,12 +50,12 @@ public class ProductoE extends JFrame {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the frame.
 	 */
-	public ProductoE() {
+	private ProductoE() {
 		setTitle("Producto");
 		setIconImage(new ImageIcon(this.getClass().getResource("/Img/cakeP.png")).getImage());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -64,22 +66,31 @@ public class ProductoE extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.WHITE);
+		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Buscar Producto", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBounds(4, 27, 520, 91);
+		contentPane.add(panel);
+		panel.setLayout(null);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(6, 16, 504, 68);
+		panel.add(separator);
+		
 		comboBox = new JComboBox<String>();
+		comboBox.setBounds(29, 44, 110, 20);
+		panel.add(comboBox);
 		comboBox.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
-		comboBox.setBounds(34, 53, 110, 20);
-		comboBox.addItem("ID Producto");
-		comboBox.addItem("Nombre Producto");
-		comboBox.addItem("Cantidad Producto");
-		comboBox.addItem("Precio Producto");
-		contentPane.add(comboBox);
 		
 		txtBusqueda = new JTextField();
+		txtBusqueda.setBounds(149, 44, 86, 20);
+		panel.add(txtBusqueda);
 		txtBusqueda.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
-		txtBusqueda.setBounds(161, 53, 86, 20);
-		contentPane.add(txtBusqueda);
 		txtBusqueda.setColumns(10);
 		
 		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar.setBounds(264, 43, 89, 23);
+		panel.add(btnBuscar);
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
@@ -123,31 +134,15 @@ public class ProductoE extends JFrame {
 			}
 		});
 		btnBuscar.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
-		btnBuscar.setBounds(266, 52, 89, 23);
-		contentPane.add(btnBuscar);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(56, 158, 422, 110);
-		contentPane.add(scrollPane);
-		
-		table = new JTable();
-		scrollPane.setViewportView(table);
-		
-		JPanel panel = new JPanel();
-		panel.setBackground(Color.WHITE);
-		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Buscar Producto", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(4, 11, 520, 91);
-		contentPane.add(panel);
-		panel.setLayout(null);
-		
-		JSeparator separator = new JSeparator();
-		separator.setBounds(6, 16, 504, 68);
-		panel.add(separator);
+		comboBox.addItem("ID Producto");
+		comboBox.addItem("Nombre Producto");
+		comboBox.addItem("Cantidad Producto");
+		comboBox.addItem("Precio Producto");
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.WHITE);
 		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Lista de Producto", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_1.setBounds(4, 101, 520, 197);
+		panel_1.setBounds(4, 120, 520, 197);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -171,6 +166,30 @@ public class ProductoE extends JFrame {
 			}
 		});
 		btnListaDeProductos.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(53, 76, 422, 110);
+		panel_1.add(scrollPane);
+		
+		table = new JTable();
+		scrollPane.setViewportView(table);
+		
+		JLabel lblInicio = new JLabel("Inicio");
+		lblInicio.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				_instance.setVisible(false);
+				OperacionesComunes.getInstance().irMenuPrincipal();
+			}
+		});
+		lblInicio.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
+		lblInicio.setBounds(471, 11, 53, 25);
+		contentPane.add(lblInicio);
 	}
-
+	public static ProductoE getInstance(){
+		if(_instance == null){
+			_instance = new ProductoE();
+		}
+		
+		return _instance;
+	}
 }

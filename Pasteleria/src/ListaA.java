@@ -1,5 +1,3 @@
-import java.awt.EventQueue;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -17,6 +15,8 @@ import net.proteanit.sql.DbUtils;
 import java.awt.Color;
 import javax.swing.UIManager;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.awt.event.ActionEvent;
@@ -64,7 +64,7 @@ public class ListaA extends JFrame {
 		setTitle("Lista");
 		setIconImage(new ImageIcon(this.getClass().getResource("/Img/cakeP.png")).getImage());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 576, 480);
+		setBounds(100, 100, 563, 475);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -168,6 +168,22 @@ public class ListaA extends JFrame {
 		panel.add(btnActualizar);
 		btnActualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try{
+ 					DatosUsuario.getInstance().getUserName();
+					String sql = "update PasteleriaDBA.Lista set PedidoID=?, ProductoID=?, CantidadVendida=?, PrecioVenta=? where ListaID=?";
+
+ 					PreparedStatement pst=DerbyConnection.DbStart().prepareStatement(sql);
+ 					pst.setInt(1,Integer.parseInt(txtProducto.getText()));
+ 					pst.setInt(2,Integer.parseInt(txtPedido.getText())); 					
+ 					pst.setInt(3,Integer.parseInt(txtCantidad.getText()));
+					pst.setDouble(4,Double.parseDouble(txtPrecio.getText()));
+					pst.setInt(5, Integer.parseInt(txtID.getText()));
+					pst.execute();
+ 				
+ 					JOptionPane.showMessageDialog(null,"Lista Actualizado...");
+				}catch(Exception ex){
+					JOptionPane.showMessageDialog(null, "Error al actualizar datos de Lista");
+				}
 			}
 		});
 		btnActualizar.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
@@ -195,11 +211,32 @@ public class ListaA extends JFrame {
 				try{
 					switch(comboBox.getSelectedIndex()){
 						case 0: { // buscar por id
+							Integer ListaID=0, PedidoId=0, ProductoId=0, Cantidad=0;
+							Double Precio=0.0;
 							String sql="select * from PasteleriaDBA.Lista where ListaID=?";
 							PreparedStatement pst=DerbyConnection.DbStart().prepareStatement(sql);
+							PreparedStatement cp=DerbyConnection.DbStart().prepareStatement(sql);
 							pst.setInt(1,Integer.parseInt(txtBusqueda.getText()));
 							ResultSet rs= pst.executeQuery();							
 							table.setModel(DbUtils.resultSetToTableModel(rs));
+							
+							cp.setInt(1,Integer.parseInt(txtBusqueda.getText()));
+							ResultSet copy = cp.executeQuery();
+							while(copy.next()){
+								ListaID = copy.getInt("LISTAID");
+								ProductoId = copy.getInt("PRODUCTOID");
+								PedidoId = copy.getInt("PEDIDOID");								
+								Cantidad = copy.getInt("CANTIDADVENDIDA");
+								Precio= copy.getDouble("PRECIOVENTA");
+							}
+							cp.close();
+							pst.close();
+							txtID.setText(ListaID.toString());
+							txtProducto.setText(ProductoId.toString());
+							txtPedido.setText(PedidoId.toString());							
+							txtCantidad.setText(Cantidad.toString());
+							txtPrecio.setText(Precio.toString());
+							
 						} break;
 						case 1: { // buscar por Pedido
 							String sql="select * from PasteleriaDBA.Lista where PedidoID=?";
@@ -290,7 +327,22 @@ public class ListaA extends JFrame {
 		btnLista.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
 		btnLista.setBounds(231, 22, 89, 23);
 		panel_2.add(btnLista);
+		
+		JLabel lblInicio = new JLabel("Inicio");
+		lblInicio.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				_instance.setVisible(false);
+				OperacionesComunes.getInstance().irMenuPrincipal();
+			}
+		});
+		lblInicio.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
+		lblInicio.setBounds(491, 0, 45, 27);
+		contentPane.add(lblInicio);
+		
+	
 	}
+	
 	
 	public static ListaA getInstance(){
 		if(_instance == null){
@@ -299,5 +351,4 @@ public class ListaA extends JFrame {
 		
 		return _instance;
 	}
-
 }

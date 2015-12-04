@@ -1,6 +1,5 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -105,7 +104,6 @@ public class LoginO extends JFrame {
 				String pass = String.valueOf(passwordField.getPassword());
 				boolean success = login.MLogin(user, pass);
 				if(success){
-					//FLogin.dispose();
 					_instance.setVisible(false);
 				}
 				else{

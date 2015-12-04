@@ -1,12 +1,47 @@
+import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.sql.*;
 import java.util.ArrayList;
 
 import javax.swing.*;
 
+import org.apache.derby.drda.NetworkServerControl;
+
 public class DerbyConnection {
 	private Connection connection;
+	private NetworkServerControl server;
 	int index=0;
 	
+	public void StartServer(){
+		try{
+			PrintWriter print = new PrintWriter(System.out);
+			System.setProperty("derby.drda.startNetworkServer","true");
+			server = new NetworkServerControl
+					(InetAddress.getByName("localhost"),1527);
+			server.start(print);
+			JOptionPane.showMessageDialog(null,"Verificando conexion del servidor de derby!");
+			for (int i = 0; i < 5 ; i ++)
+			{
+				try {
+					Thread.currentThread();
+					Thread.sleep(1000);
+					server.ping();
+				}
+				catch (Exception e)
+				{
+					if (i == 9)
+					{
+						JOptionPane.showMessageDialog(null,"Tiempo de espera para iniciar servidor agotado!");
+						throw e;
+					}
+				}
+			}
+			JOptionPane.showMessageDialog(null,"Servidor iniciado...");
+		} catch(Exception ex){
+			JOptionPane.showMessageDialog(null,"No se ha podido iniciar el servidor. salidendo");
+			System.exit(0);
+		}
+	}
 	public static Connection DbStart()
 	{
 		try{
@@ -18,7 +53,27 @@ public class DerbyConnection {
 				return null;
 			}
 	}
-	
+	public boolean LoginEmpleado(int ID, String pass){
+		boolean loginSuccess = false;
+		try{
+			String schema ="select *from PasteleriaDBA.Usuario where UsuarioID='"+ID+"' and ContrasenaUsuario='"+pass+"'";
+			PreparedStatement pst = connection.prepareStatement(schema);
+			ResultSet rs = pst.executeQuery();
+			ArrayList<String> Nombres = new ArrayList<String>();
+			
+			while(rs.next()){
+					Nombres.add(rs.getString(1));
+					index++;
+				}
+			OperacionesComunes.getInstance().setNombres(Nombres);
+			OperacionesComunes.getInstance().setID(ID);
+				rs.close();
+				return loginSuccess;
+		} catch(Exception ex){
+			return false;
+		}
+
+	}
 	public boolean MLogin(String user, String pass){
 		boolean loginSuccess = false;
 		try{
