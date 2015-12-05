@@ -35,6 +35,7 @@ public class DerbyConnection {
 					}
 				}
 			}
+			//Process p = Runtime.getRuntime().exec("./startnetwork.bat"); 
 			JOptionPane.showMessageDialog(null,"Servidor iniciado...");
 		} catch(Exception ex){
 			JOptionPane.showMessageDialog(null,"No se ha podido iniciar el servidor. salidendo");
