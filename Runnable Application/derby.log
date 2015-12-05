@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 Fri Dec 04 21:41:24 EST 2015 : Apache Derby Network Server - 10.11.1.2 - (1629631) started and ready to accept connections on port 1527
 Fri Dec 04 21:41:25 EST 2015 : Could not listen on port 1527 on host 127.0.0.1:
  java.net.BindException: Address already in use: JVM_Bind
 An exception was thrown during network server startup. DRDA_ListenPort.S:Could not listen on port 1527 on host 127.0.0.1:
+=======
+Fri Dec 04 22:38:12 BOT 2015 : Servidor de red Apache Derby: Se ha iniciado 10.11.1.2 - (1629631) y está listo para aceptar las conexiones en el puerto 1527
+Fri Dec 04 22:38:12 BOT 2015 : No se ha podido recibir en el puerto 1527 en el host 127.0.0.1:
+ java.net.BindException: Address already in use: JVM_Bind
+An exception was thrown during network server startup. DRDA_ListenPort.S:No se ha podido recibir en el puerto 1527 en el host 127.0.0.1:
+>>>>>>> origin/master
  java.net.BindException: Address already in use: JVM_Bind
 java.lang.reflect.InvocationTargetException
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
@@ -10,9 +17,29 @@ java.lang.reflect.InvocationTargetException
 	at java.lang.reflect.Method.invoke(Unknown Source)
 	at org.apache.derby.iapi.jdbc.DRDAServerStarter.run(Unknown Source)
 	at java.lang.Thread.run(Unknown Source)
+<<<<<<< HEAD
 Caused by: java.lang.Exception: DRDA_ListenPort.S:Could not listen on port 1527 on host 127.0.0.1:
+=======
+Caused by: java.lang.Exception: DRDA_ListenPort.S:No se ha podido recibir en el puerto 1527 en el host 127.0.0.1:
+>>>>>>> origin/master
  java.net.BindException: Address already in use: JVM_Bind
 	at org.apache.derby.impl.drda.NetworkServerControlImpl.consolePropertyMessageWork(Unknown Source)
 	at org.apache.derby.impl.drda.NetworkServerControlImpl.consolePropertyMessage(Unknown Source)
 	at org.apache.derby.impl.drda.NetworkServerControlImpl.blockingStart(Unknown Source)
 	... 6 more
+<<<<<<< HEAD
+=======
+----------------------------------------------------------------
+Fri Dec 04 22:38:31 BOT 2015:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0151-7000-ffc4-000005a67be8 
+on database directory D:\Documentos\GitHub\PasteleriaAPP\PasteleriaAPP\Runnable Application\PasteleriaDB with class loader java.net.URLClassLoader@677327b6 
+Loaded from jar:rsrc:derby.jar!/
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_66-b18
+user.dir=D:\Documentos\GitHub\PasteleriaAPP\PasteleriaAPP\Runnable Application
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
+>>>>>>> origin/master
