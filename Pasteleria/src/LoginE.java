@@ -89,6 +89,7 @@ public class LoginE extends JFrame {
 					
 					int count=0;
 					while(rs.next()){
+						OperacionesComunes.getInstance().setLoggedEmployee(rs.getString("NOMBREUSUARIO"));
 						count=count+1;
 					}
 					if(count==1){

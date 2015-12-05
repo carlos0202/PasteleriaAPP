@@ -6,6 +6,7 @@ public class OperacionesComunes {
 	private String usuarioLogueado;
 	private ArrayList<String> Nombres;
 	private int ID;
+	private String loggedEmployee;
 	
 	private OperacionesComunes(){
 		Permisos = new ArrayList<String>();
@@ -72,5 +73,13 @@ public class OperacionesComunes {
 	
 	public String getUsuarioLogueado(){
 		return _instance.usuarioLogueado;
+	}
+	
+	public void setLoggedEmployee(String loggedEmployee){
+		_instance.loggedEmployee = loggedEmployee;
+	}
+	
+	public String getLoggedEmployee(){
+		return _instance.loggedEmployee;
 	}
 }

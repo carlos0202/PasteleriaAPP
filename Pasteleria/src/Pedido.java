@@ -54,7 +54,7 @@ public class Pedido extends JFrame {
 	 * Create the frame.
 	 */
 	public Pedido() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Heleine Scutt\\workspace\\Pasteleria0\\src\\Img\\cakeP.png"));
+		setIconImage(new ImageIcon(this.getClass().getResource("/Img/cakeP.png")).getImage());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 447, 349);
 		contentPane = new JPanel();

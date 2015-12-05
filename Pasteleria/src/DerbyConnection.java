@@ -16,7 +16,7 @@ public class DerbyConnection {
 		try{
 			PrintWriter print = new PrintWriter(System.out);
 			System.setProperty("derby.drda.startNetworkServer","true");
-			server = new NetworkServerControl(InetAddress.getByName("localhost"),1527);
+			server = new NetworkServerControl();
 			server.start(print);
 			JOptionPane.showMessageDialog(null,"Verificando conexion del servidor de derby!");
 			for (int i = 0; i < 5 ; i ++)

@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Properties;
 
 import javax.swing.*;
@@ -28,7 +29,7 @@ public class PedidoA extends JFrame {
 	public static DerbyConnection Connection;
 	private JTextField txtID;
 	private JTextField txtStatus;
-	private JTextField txtProducto;
+	private JComboBox txtProducto;
 	private JTextField txtCliente;
 	private JTextField txtAbono;
 	private JTextField txtTotal;
@@ -93,10 +94,10 @@ public class PedidoA extends JFrame {
 		lblStatus.setBounds(101, 53, 46, 14);
 		contentPane.add(lblStatus);
 		
-		JLabel lblProductoId = new JLabel("Producto Id");
+		JLabel lblProductoId = new JLabel("Producto");
 		lblProductoId.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 14));
 		lblProductoId.setToolTipText("");
-		lblProductoId.setBounds(236, 53, 72, 14);
+		lblProductoId.setBounds(236, 53, 60, 14);
 		contentPane.add(lblProductoId);
 		
 		JLabel lblClienteId = new JLabel("Cliente Id");
@@ -133,12 +134,31 @@ public class PedidoA extends JFrame {
 		contentPane.add(txtStatus);
 		txtStatus.setColumns(10);
 		
-		txtProducto = new JTextField();
+		txtProducto = new JComboBox();
 		txtProducto.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		txtProducto.setText("");
-		txtProducto.setBounds(310, 51, 86, 20);
+		txtProducto.setBounds(300, 51, 96, 20);
+		try{
+			String sql="SELECT * FROM PASTELERIADBA.PRODUCTO";
+			PreparedStatement pst=DerbyConnection.DbStart().prepareStatement(sql);
+			ArrayList<models.Producto> productos = new ArrayList<models.Producto>();
+			ResultSet data = pst.executeQuery();
+			while(data.next()){
+				productos.add(new models.Producto(
+						data.getLong("PRODUCTOID"),
+						data.getString("NOMBREPRODUCTO"),
+						data.getLong("CANTIDADPRODUCTO"),
+						data.getString("DESCRIPCIONPRODUCTO"),
+						data.getDouble("PRECIOPRODUCTO")));
+			}
+			for(models.Producto p: productos){
+				txtProducto.addItem(p);
+			}
+			pst.close();
+			
+		}catch(Exception ex){
+			JOptionPane.showMessageDialog(null,"Error al agregar pedido...");
+		}
 		contentPane.add(txtProducto);
-		txtProducto.setColumns(10);
 		
 		Properties p = new Properties();
 		p.put("text.today", "Hoy");
@@ -167,6 +187,7 @@ public class PedidoA extends JFrame {
 		txtAbono.setColumns(10);
 		
 		txtTotal = new JTextField();
+		txtTotal.setEditable(false);
 		txtTotal.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		txtTotal.setText("");
 		txtTotal.setBounds(428, 78, 86, 20);
@@ -177,11 +198,14 @@ public class PedidoA extends JFrame {
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
-					Date selectedDate = (Date)dpFechaPedido.getModel().getValue();
+					
+					models.Producto prod = (models.Producto)txtProducto.getSelectedItem();
+					txtTotal.setText("" + (prod.getPrecioProducto() - Double.parseDouble(txtAbono.getText())));
+					java.util.Date selectedDate = (java.util.Date)dpFechaPedido.getModel().getValue();
 					String sql="INSERT INTO PasteleriaDBA.Pedido(StatusPedido, ProductoID, ClienteID, FechaPedido, AbonoPedido, TotalPedido) values(?,?,?,?,?,?)";
 					PreparedStatement pst=DerbyConnection.DbStart().prepareStatement(sql);
 					pst.setString(1,txtStatus.getText());
-					pst.setInt(2,Integer.parseInt(txtProducto.getText()));
+					pst.setLong(2, prod.getProductoID());
 					pst.setInt(3,Integer.parseInt(txtCliente.getText()));
 					pst.setDate(4,new java.sql.Date(selectedDate.getTime()));
 					pst.setDouble(5,Double.parseDouble(txtAbono.getText()));
@@ -213,9 +237,11 @@ public class PedidoA extends JFrame {
 					String sql = "update PasteleriaDBA.Pedido set StatusPedido=?, ProductoID=?, ClienteID=?,"+		
 							" FechaPedido=?, AbonoPedido=?, TotalPedido=? where PedidoID=?";
 
+					models.Producto prod = (models.Producto)txtProducto.getSelectedItem();
+					txtTotal.setText("" + (prod.getPrecioProducto() - Double.parseDouble(txtAbono.getText())));
  					PreparedStatement pst=DerbyConnection.DbStart().prepareStatement(sql);
 					pst.setString(1,txtStatus.getText());
-					pst.setInt(2,Integer.parseInt(txtProducto.getText()));
+					pst.setLong(2, prod.getProductoID());
 					pst.setInt(3,Integer.parseInt(txtCliente.getText()));
 					pst.setDate(4,new java.sql.Date(selectedDate.getTime()));
 					pst.setDouble(5,Double.parseDouble(txtAbono.getText()));
@@ -332,7 +358,6 @@ public class PedidoA extends JFrame {
 							pst.close();
 							txtID.setText(pedidoId.toString());
 							txtStatus.setText(statusPedido);
-							txtProducto.setText(productoId.toString());
 							txtCliente.setText(clienteID.toString());
 							dpFechaPedidoModel.setValue(new java.util.Date(fechaPedido.getTime()));
 							dpFechaPedidoPanel.updateUI();
