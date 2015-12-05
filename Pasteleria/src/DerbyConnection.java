@@ -9,15 +9,14 @@ import org.apache.derby.drda.NetworkServerControl;
 
 public class DerbyConnection {
 	private Connection connection;
-	private NetworkServerControl server;
+	private static NetworkServerControl server;
 	int index=0;
 	
-	public void StartServer(){
+	public static void StartServer(){
 		try{
 			PrintWriter print = new PrintWriter(System.out);
 			System.setProperty("derby.drda.startNetworkServer","true");
-			server = new NetworkServerControl
-					(InetAddress.getByName("localhost"),1527);
+			server = new NetworkServerControl();
 			server.start(print);
 			JOptionPane.showMessageDialog(null,"Verificando conexion del servidor de derby!");
 			for (int i = 0; i < 5 ; i ++)
