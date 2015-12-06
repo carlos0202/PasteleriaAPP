@@ -55,7 +55,7 @@ public class DerbyConnection {
 	{
 		try{
 				Class.forName("org.apache.derby.jdbc.ClientDriver");
-				Connection conn= DriverManager.getConnection("jdbc:derby://localhost:1527/PasteleriaDB;user=PasteleriaDBA;password=123");
+				Connection conn= DriverManager.getConnection("jdbc:derby://localhost:1527/"+System.getProperty("user.dir")+"PasteleriaDB;user=PasteleriaDBA;password=123");
 				return conn;
 			} catch(Exception e){
 				JOptionPane.showMessageDialog(null, "Error al conectar a BD");
@@ -87,7 +87,8 @@ public class DerbyConnection {
 		boolean loginSuccess = false;
 		try{
 			Class.forName("org.apache.derby.jdbc.ClientDriver").newInstance();
-			String conn = "jdbc:derby://localhost:1527/PasteleriaDB;user=" + user + ";password=" + pass;
+			String conn = "jdbc:derby://localhost:1527/"+System.getProperty("user.dir")+"\\PasteleriaDB;user=" + user + ";password=" + pass;
+			System.out.println(conn);
 			connection = DriverManager.getConnection(conn);
 			String schema = "select schemaname from sys.sysschemas where authorizationid = '"+ user.toUpperCase()+"'";
 			PreparedStatement pst = connection.prepareStatement(schema);
