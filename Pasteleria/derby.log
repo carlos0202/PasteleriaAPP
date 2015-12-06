@@ -1,18 +1,14 @@
-Sun Dec 06 12:36:50 BOT 2015 : Servidor de red Apache Derby: Se ha iniciado 10.11.1.2 - (1629631) y está listo para aceptar las conexiones en el puerto 1527
-Sun Dec 06 12:36:50 BOT 2015 : No se ha podido recibir en el puerto 1527 en el host localhost:
- java.net.BindException: Address already in use: JVM_Bind
-An exception was thrown during network server startup. DRDA_ListenPort.S:No se ha podido recibir en el puerto 1527 en el host localhost:
- java.net.BindException: Address already in use: JVM_Bind
-java.lang.reflect.InvocationTargetException
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
-	at java.lang.reflect.Method.invoke(Unknown Source)
-	at org.apache.derby.iapi.jdbc.DRDAServerStarter.run(Unknown Source)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.Exception: DRDA_ListenPort.S:No se ha podido recibir en el puerto 1527 en el host localhost:
- java.net.BindException: Address already in use: JVM_Bind
-	at org.apache.derby.impl.drda.NetworkServerControlImpl.consolePropertyMessageWork(Unknown Source)
-	at org.apache.derby.impl.drda.NetworkServerControlImpl.consolePropertyMessage(Unknown Source)
-	at org.apache.derby.impl.drda.NetworkServerControlImpl.blockingStart(Unknown Source)
-	... 6 more
+Sun Dec 06 18:21:41 BOT 2015 : Servidor de red Apache Derby: Se ha iniciado 10.11.1.2 - (1629631) y está listo para aceptar las conexiones en el puerto 1527
+----------------------------------------------------------------
+Sun Dec 06 18:22:00 BOT 2015:
+ Iniciando instancia a816c00e-0151-7962-e079-ffff87c871d2 de Derby, versión The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): 
+en el directorio de base de datos D:\Documentos\GitHub\PasteleriaAPP\PasteleriaAPP\Pasteleria\PasteleriaDB con el cargador de clases sun.misc.Launcher$AppClassLoader@61bbe9ba
+Cargado desde file:/C:/Program%20Files/Java/jdk1.8.0_60/db/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_60-b27
+user.dir=D:\Documentos\GitHub\PasteleriaAPP\PasteleriaAPP\Pasteleria
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=D:\Documentos\GitHub\PasteleriaAPP\PasteleriaAPP\Pasteleria
+Cargador de clases de base de datos iniciado - derby.database.classpath=''
