@@ -33,7 +33,7 @@ public class Producto extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -45,7 +45,7 @@ public class Producto extends JFrame {
 			}
 		});
 	}
-
+*/
 	/**
 	 * Create the frame.
 	 */
@@ -53,7 +53,7 @@ public class Producto extends JFrame {
 		setTitle("Productos");
 		setIconImage(new ImageIcon(this.getClass().getResource("/Img/cakeP.png")).getImage());
 		getContentPane().setFont(new Font("Times New Roman", Font.BOLD| Font.ITALIC, 18));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 534, 354);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
@@ -79,6 +79,7 @@ public class Producto extends JFrame {
 		btnInicio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				InicioCliente.getInstance().setVisible(true);
+				contentPane.getTopLevelAncestor().setVisible(false);
 			}
 		});
 		btnInicio.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
@@ -102,5 +103,6 @@ public class Producto extends JFrame {
 		btnProductos.setBounds(208, 38, 99, 27);
 		contentPane.add(btnProductos);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{contentPane, panel, scrollPane, table, btnInicio, btnProductos}));
+		setLocationRelativeTo(null);
 	}
 }

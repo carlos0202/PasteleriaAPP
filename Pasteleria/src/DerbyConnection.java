@@ -42,6 +42,15 @@ public class DerbyConnection {
 			System.exit(0);
 		}
 	}
+	
+	public static void StopServer(){
+		try {
+			server.shutdown();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.exit(0);
+		}
+	}
 	public static Connection DbStart()
 	{
 		try{
@@ -94,13 +103,16 @@ public class DerbyConnection {
 				if (Usuario.contains("ADMINISTRADORSCHEMA")){
 					 JOptionPane.showMessageDialog (null, "Bienvenido Administrador");
 					 loginSuccess = true;
+					 OperacionesComunes.getInstance().setLoginUsed(1);
 					 InicioAdministrador.getInstance().setVisible(true);
 				 }
 				 else if(Usuario.contains("EMPLEADOSCHEMA")){
 					 loginSuccess = true;
+					 OperacionesComunes.getInstance().setLoginUsed(2);
 					 LoginE.getInstance().setVisible(true);
 				 }
 				 else if(Usuario.contains("CLIENTESCHEMA")){
+					 OperacionesComunes.getInstance().setLoginUsed(3);
 					 JOptionPane.showMessageDialog(null, "Bienvenido Cliente");
 					 loginSuccess = true;
 					 InicioCliente.getInstance().setVisible(true);

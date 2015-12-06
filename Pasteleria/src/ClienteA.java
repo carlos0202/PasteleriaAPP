@@ -41,6 +41,7 @@ public class ClienteA extends JFrame {
 	private JTable table;
 	private JComboBox<String> comboBox;
 	public static ClienteA _instance;
+	private JButton btnSalir;
 
 	/**
 	 * Launch the application.
@@ -64,8 +65,8 @@ public class ClienteA extends JFrame {
 	private ClienteA() {
 		setTitle("Cliente");
 		setIconImage(new ImageIcon(this.getClass().getResource("/Img/cakeP.png")).getImage());
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 707, 498);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setBounds(100, 100, 707, 539);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -355,6 +356,18 @@ public class ClienteA extends JFrame {
 		lblInicio.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
 		lblInicio.setBounds(635, 0, 46, 25);
 		contentPane.add(lblInicio);
+		
+		btnSalir = new JButton("Salir");
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				OperacionesComunes.getInstance().irMenuPrincipal();
+				ClienteA.getInstance().dispose();
+			}
+		});
+		btnSalir.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
+		btnSalir.setBounds(592, 456, 89, 23);
+		contentPane.add(btnSalir);
+		this.setLocationRelativeTo(null);
 	}
 	public static ClienteA getInstance(){
 		if(_instance == null){

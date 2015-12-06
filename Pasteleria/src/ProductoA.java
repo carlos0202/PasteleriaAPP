@@ -53,6 +53,7 @@ public class ProductoA extends JFrame {
 	private JPanel panel_3;
 	private JLabel lblInicio;
 	public static ProductoA _instance;
+	private JButton btnSalir;
 
 	/**
 	 * Launch the application.
@@ -76,8 +77,8 @@ public class ProductoA extends JFrame {
 	private ProductoA() {
 		setTitle("Producto");
 		setIconImage(new ImageIcon(this.getClass().getResource("/Img/cakeP.png")).getImage());
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 674, 485);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setBounds(100, 100, 674, 537);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -349,6 +350,19 @@ public class ProductoA extends JFrame {
 		lblInicio.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
 		lblInicio.setBounds(597, 0, 46, 25);
 		contentPane.add(lblInicio);
+		
+		btnSalir = new JButton("Salir");
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				OperacionesComunes.getInstance().irMenuPrincipal();
+				ProductoA.getInstance().dispose();
+			}
+		});
+		btnSalir.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
+		btnSalir.setBounds(554, 458, 89, 23);
+		contentPane.add(btnSalir);
+		
+		setLocationRelativeTo(null);
 	}
 	public static ProductoA getInstance(){
 		if(_instance == null){

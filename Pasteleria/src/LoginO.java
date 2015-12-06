@@ -26,6 +26,7 @@ public class LoginO extends JFrame {
 	public static DerbyConnection login;
 	public static LoginO _instance;
 	private JPanel contentPane;
+	private JButton btnSalir;
 
 	/**
 	 * Launch the application.
@@ -48,11 +49,10 @@ public class LoginO extends JFrame {
 	 */
 	private LoginO() {
 		setTitle("Inicio Sesion");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		getContentPane().setBackground(Color.WHITE);
 		setForeground(Color.WHITE);
@@ -61,6 +61,7 @@ public class LoginO extends JFrame {
 		setBounds(100, 100, 450, 300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
+		contentPane.setLayout(null);
 		
 		JLabel lblUsuario = new JLabel("Usuario");
 		lblUsuario.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 18));
@@ -104,7 +105,7 @@ public class LoginO extends JFrame {
 				String pass = String.valueOf(passwordField.getPassword());
 				boolean success = login.MLogin(user, pass);
 				if(success){
-					_instance.setVisible(false);
+					LoginO.getInstance().setVisible(false);
 				}
 				else{
 					JOptionPane.showMessageDialog(null,"Error al iniciar sesion. Revise sus datos...");
@@ -118,7 +119,23 @@ public class LoginO extends JFrame {
 		btnIniciar.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 18));
 		btnIniciar.setBounds(230, 163, 124, 25);
 		getContentPane().add(btnIniciar);
+		getRootPane().setDefaultButton(btnIniciar);
 		
+		btnSalir = new JButton("Salir");
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//DerbyConnection.StopServer();
+				if(JOptionPane.showConfirmDialog(null, "Esta seguro que desea salir?") == JOptionPane.YES_OPTION){
+					JOptionPane.showMessageDialog(null, "Saliendo...");
+					System.exit(0);
+				}
+			}
+		});
+		btnSalir.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 18));
+		btnSalir.setBackground(Color.WHITE);
+		btnSalir.setBounds(337,220,77,20);
+		contentPane.add(btnSalir);
+		setLocationRelativeTo(null);
 	}
 
 	public static LoginO getInstance(){

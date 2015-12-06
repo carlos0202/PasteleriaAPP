@@ -55,7 +55,7 @@ public class Pedido extends JFrame {
 	 */
 	public Pedido() {
 		setIconImage(new ImageIcon(this.getClass().getResource("/Img/cakeP.png")).getImage());
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 447, 349);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
@@ -133,6 +133,7 @@ public class Pedido extends JFrame {
 		btnInicio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				InicioCliente.getInstance().setVisible(true);
+				contentPane.getTopLevelAncestor().setVisible(false);
 			}
 		});
 		btnInicio.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 16));
@@ -144,5 +145,6 @@ public class Pedido extends JFrame {
 		label.setIcon(new ImageIcon(imglogo));
 		label.setBounds(10, 23, 199, 192);
 		contentPane.add(label);
+		setLocationRelativeTo(null);
 	}
 }

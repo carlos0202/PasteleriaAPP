@@ -20,6 +20,8 @@ public class InicioEmpleado extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private static InicioEmpleado _instance;
+	private JLabel lblEmployee;
+	private JButton btnSalir;
 
 	/**
 	 * Launch the application.
@@ -43,8 +45,8 @@ public class InicioEmpleado extends JFrame {
 	private InicioEmpleado() {
 		setTitle("Inicio");
 		setIconImage(new ImageIcon(this.getClass().getResource("/Img/cakeP.png")).getImage());
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 612, 303);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setBounds(100, 100, 612, 340);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -58,6 +60,7 @@ public class InicioEmpleado extends JFrame {
 		btnProducto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ProductoE.getInstance().setVisible(true);
+				InicioEmpleado.getInstance().setVisible(false);
 			}
 		});
 		btnProducto.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 14));
@@ -71,6 +74,7 @@ public class InicioEmpleado extends JFrame {
 		btnPedido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PedidoA.getInstance().setVisible(true);
+				InicioEmpleado.getInstance().setVisible(false);
 			}
 		});
 		btnPedido.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 14));
@@ -81,6 +85,7 @@ public class InicioEmpleado extends JFrame {
 		btnLista.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ListaA.getInstance().setVisible(true);
+				InicioEmpleado.getInstance().setVisible(false);
 			}
 		});
 		btnLista.setBackground(Color.WHITE);
@@ -104,6 +109,10 @@ public class InicioEmpleado extends JFrame {
 		contentPane.add(btnCliente);
 		
 		JButton btnFactura = new JButton("Factura");
+		btnFactura.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnFactura.setBackground(Color.WHITE);
 		Image imgFa = new ImageIcon(this.getClass().getResource("/Img/cash.png")).getImage();
 		btnFactura.setIcon(new ImageIcon(imgFa));
@@ -119,7 +128,7 @@ public class InicioEmpleado extends JFrame {
 		
 		JLabel Hora = new JLabel("");
 		Hora.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
-		Hora.setBounds(529, 11, 57, 22);
+		Hora.setBounds(503, 11, 83, 22);
 		contentPane.add(Hora);
 		Calendar cal = Calendar.getInstance(); 
 		java.util.Date fecha = (java.util.Date) cal.getTime(); 
@@ -130,7 +139,24 @@ public class InicioEmpleado extends JFrame {
 		Usuario.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
 		Usuario.setBounds(448, 0, 57, 22);
 		contentPane.add(Usuario);
+		
+		lblEmployee = new JLabel("05:47:02 PM");
+		lblEmployee.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
+		lblEmployee.setBounds(278, 9, 83, 22);
+		lblEmployee.setText(OperacionesComunes.getInstance().getLoggedEmployee());
+		contentPane.add(lblEmployee);
+		
+		btnSalir = new JButton("Salir");
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LoginE.getInstance().setVisible(true);
+				InicioEmpleado.getInstance().dispose();
+			}
+		});
+		btnSalir.setBounds(514, 255, 68, 25);
+		contentPane.add(btnSalir);
 		//Usuario.setText( rs.getString("NombreUsuario" ));
+		setLocationRelativeTo(null);
 	}
 	
 	public static InicioEmpleado getInstance(){

@@ -32,6 +32,7 @@ public class Login {
 	private JTextField txtUsuario;
 	private JPasswordField passwordField;
 	public static DerbyConnection login;
+	private JButton btnSalir;
 	
 	public Login() {
 		initialize();
@@ -48,20 +49,20 @@ public class Login {
 		FLogin.setForeground(Color.WHITE);
 		FLogin.setIconImage(new ImageIcon(this.getClass().getResource("/Img/cakeP.png")).getImage());
 		FLogin.getContentPane().setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 18));
-		FLogin.setBounds(100, 100, 450, 300);
-		FLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		FLogin.setBounds(100, 100, 526, 339);
+		FLogin.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		FLogin.getContentPane().setLayout(null);
 		
 		JLabel lblUsuario = new JLabel("Usuario");
 		lblUsuario.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 18));
-		lblUsuario.setBounds(203, 69, 77, 25);
+		lblUsuario.setBounds(232, 69, 77, 25);
 		FLogin.getContentPane().add(lblUsuario);
 		
 		login =new DerbyConnection();
 		
 		JLabel lblPassword = new JLabel("Password");
 		lblPassword.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 18));
-		lblPassword.setBounds(203, 105, 89, 22);
+		lblPassword.setBounds(232, 105, 89, 22);
 		FLogin.getContentPane().add(lblPassword);
 		
 		JLabel lblLogo = new JLabel("");
@@ -72,14 +73,14 @@ public class Login {
 		
 		txtUsuario = new JTextField();
 		txtUsuario.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 18));
-		txtUsuario.setBounds(290, 70, 124, 21);
+		txtUsuario.setBounds(319, 70, 156, 21);
 		FLogin.getContentPane().add(txtUsuario);
 		txtUsuario.setColumns(10);
 		
 		passwordField = new JPasswordField();
 		passwordField.setEchoChar('*');
 		passwordField.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 18));
-		passwordField.setBounds(290, 108, 124, 21);
+		passwordField.setBounds(319, 108, 156, 21);
 		FLogin.getContentPane().add(passwordField);
 		 		
 		JButton btnIniciar = new JButton("Iniciar");
@@ -95,6 +96,7 @@ public class Login {
 				boolean success = login.MLogin(user, pass);
 				if(success){
 					//FLogin.dispose();
+					FLogin.setVisible(false);
 				}
 				else{
 					JOptionPane.showMessageDialog(null,"Error al iniciar sesion. Revise sus datos...");
@@ -106,9 +108,23 @@ public class Login {
 			}
 		});
 		btnIniciar.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 18));
-		btnIniciar.setBounds(230, 163, 124, 25);
+		btnIniciar.setBounds(351, 152, 124, 25);
 		FLogin.getContentPane().add(btnIniciar);
+		FLogin.getRootPane().setDefaultButton(btnIniciar);
+		SwingUtilities.getRootPane(btnIniciar).setDefaultButton(btnIniciar);
 		
+		btnSalir = new JButton("Salir");
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JOptionPane.showMessageDialog(null, "Gracias por usar nuestros servicios...");
+				DerbyConnection.StopServer();
+				System.exit(0);;
+			}
+		});
+		btnSalir.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 18));
+		btnSalir.setBackground(Color.WHITE);
+		btnSalir.setBounds(399, 254, 77, 25);
+		FLogin.getContentPane().add(btnSalir);
+		FLogin.setLocationRelativeTo(null);
 	}
-	
 }

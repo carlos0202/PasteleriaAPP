@@ -1,7 +1,7 @@
 
 public class Skeleton0 {
 	public Skeleton0() {
-		DerbyConnection.StartServer();
+		//DerbyConnection.StartServer();
 		LoginO.getInstance().setVisible(true);
 			}
 

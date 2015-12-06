@@ -58,7 +58,7 @@ public class ProductoE extends JFrame {
 	private ProductoE() {
 		setTitle("Producto");
 		setIconImage(new ImageIcon(this.getClass().getResource("/Img/cakeP.png")).getImage());
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 550, 367);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
@@ -177,13 +177,14 @@ public class ProductoE extends JFrame {
 		JLabel lblInicio = new JLabel("Inicio");
 		lblInicio.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				_instance.setVisible(false);
 				OperacionesComunes.getInstance().irMenuPrincipal();
+				ProductoE.getInstance().dispose();
 			}
 		});
 		lblInicio.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
 		lblInicio.setBounds(471, 11, 53, 25);
 		contentPane.add(lblInicio);
+		setLocationRelativeTo(null);
 	}
 	public static ProductoE getInstance(){
 		if(_instance == null){

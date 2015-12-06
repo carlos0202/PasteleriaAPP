@@ -19,6 +19,7 @@ public class InicioCliente extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private static InicioCliente _instance;
+	private JButton btnSalir;
 	
 	/**
 	 * Launch the application.
@@ -41,8 +42,8 @@ public class InicioCliente extends JFrame {
 	 */
 	private InicioCliente() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Heleine Scutt\\workspace\\Pasteleria0\\src\\Img\\cakeP.png"));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setBounds(100, 100, 450, 340);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -82,6 +83,17 @@ public class InicioCliente extends JFrame {
 		label.setIcon(new ImageIcon(imglogo));
 		label.setBounds(10, 32, 189, 191);
 		contentPane.add(label);
+		
+		btnSalir = new JButton("Salir");
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LoginO.getInstance().setVisible(true);
+				InicioCliente.getInstance().dispose();
+			}
+		});
+		btnSalir.setBounds(335, 255, 68, 25);
+		contentPane.add(btnSalir);
+		setLocationRelativeTo(null);
 	}
 	
 	public static InicioCliente getInstance(){

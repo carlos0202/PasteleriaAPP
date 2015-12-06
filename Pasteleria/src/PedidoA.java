@@ -45,6 +45,7 @@ public class PedidoA extends JFrame {
 	private JButton btnActualizar;
 	private JButton btnLista;
 	public static PedidoA _instance;
+	private JButton btnSalir;
 
 	/**
 	 * Launch the application.
@@ -68,8 +69,8 @@ public class PedidoA extends JFrame {
 	private PedidoA() {
 		setTitle("Pedido");
 		setIconImage(new ImageIcon(this.getClass().getResource("/Img/cakeP.png")).getImage());
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 664, 478);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setBounds(100, 100, 664, 545);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -359,6 +360,7 @@ public class PedidoA extends JFrame {
 							txtID.setText(pedidoId.toString());
 							txtStatus.setText(statusPedido);
 							txtCliente.setText(clienteID.toString());
+							txtProducto.setSelectedItem(new models.Producto(productoId));
 							dpFechaPedidoModel.setValue(new java.util.Date(fechaPedido.getTime()));
 							dpFechaPedidoPanel.updateUI();
 							dpFechaPedido.updateUI();
@@ -435,8 +437,19 @@ public class PedidoA extends JFrame {
 		lblInicio.setBounds(587, 11, 39, 14);
 		contentPane.add(lblInicio);
 		
-		dpBusqueda.setVisible(false);
+		btnSalir = new JButton("Salir");
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				OperacionesComunes.getInstance().irMenuPrincipal();
+				PedidoA.getInstance().dispose();
+			}
+		});
+		btnSalir.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
+		btnSalir.setBounds(543, 462, 89, 23);
+		contentPane.add(btnSalir);
 		
+		dpBusqueda.setVisible(false);
+		setLocationRelativeTo(null);
 	}
 	public static PedidoA getInstance(){
 		if(_instance == null){

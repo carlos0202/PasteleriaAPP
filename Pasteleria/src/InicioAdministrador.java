@@ -41,8 +41,8 @@ public class InicioAdministrador extends JFrame {
 	private InicioAdministrador() {
 		setIconImage(new ImageIcon(this.getClass().getResource("/Img/cakeP.png")).getImage());
 		setForeground(Color.WHITE);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 619, 312);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setBounds(100, 100, 634, 335);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -53,6 +53,7 @@ public class InicioAdministrador extends JFrame {
 		btnProducto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ProductoA.getInstance().setVisible(true);
+				InicioAdministrador.getInstance().setVisible(false);
 			}
 		});
 		btnProducto.setBackground(Color.WHITE);
@@ -63,9 +64,11 @@ public class InicioAdministrador extends JFrame {
 		contentPane.add(btnProducto);
 		
 		JButton btnPedido = new JButton("Pedido");
+		btnPedido.setToolTipText("Administrar los pedidos de los productos");
 		btnPedido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PedidoA.getInstance().setVisible(true);
+				InicioAdministrador.getInstance().setVisible(false);
 			}
 		});
 		btnPedido.setBackground(Color.WHITE);
@@ -79,6 +82,7 @@ public class InicioAdministrador extends JFrame {
 		btnCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ClienteA.getInstance().setVisible(true);
+				InicioAdministrador.getInstance().setVisible(false);
 			}
 		});
 		btnCliente.setBackground(Color.WHITE);
@@ -92,6 +96,7 @@ public class InicioAdministrador extends JFrame {
 		btnFacturas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FacturaA.getInstance().setVisible(true);
+				InicioAdministrador.getInstance().setVisible(false);
 			}
 		});
 		btnFacturas.setBackground(Color.WHITE);
@@ -105,6 +110,7 @@ public class InicioAdministrador extends JFrame {
 		btnLista.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ListaA.getInstance().setVisible(true);
+				InicioAdministrador.getInstance().setVisible(false);
 			}
 		});
 		btnLista.setBackground(Color.WHITE);
@@ -118,6 +124,7 @@ public class InicioAdministrador extends JFrame {
 		btnUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				UsuarioA.getInstance().setVisible(true);
+				InicioAdministrador.getInstance().setVisible(false);
 			}
 		});
 		btnUsuario.setBackground(Color.WHITE);
@@ -132,6 +139,17 @@ public class InicioAdministrador extends JFrame {
 		label.setIcon(new ImageIcon(imglogo));
 		label.setBounds(10, 20, 199, 195);
 		contentPane.add(label);
+		
+		JButton btnSalir = new JButton("Salir");
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LoginO.getInstance().setVisible(true);
+				InicioAdministrador.getInstance().dispose();
+			}
+		});
+		btnSalir.setBounds(525, 250, 68, 25);
+		contentPane.add(btnSalir);
+		setLocationRelativeTo(null);
 	}
 
 	public static InicioAdministrador getInstance(){

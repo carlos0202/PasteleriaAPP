@@ -7,6 +7,7 @@ public class OperacionesComunes {
 	private ArrayList<String> Nombres;
 	private int ID;
 	private String loggedEmployee;
+	private int loginUsed; //1 administrador, 2 empleado, 3 cliente
 	
 	private OperacionesComunes(){
 		Permisos = new ArrayList<String>();
@@ -31,13 +32,13 @@ public class OperacionesComunes {
 	}
 	
 	public void irMenuPrincipal(){
-		if (Permisos.contains("ADMINISTRADORSCHEMA")){
+		if (Permisos.contains("ADMINISTRADORSCHEMA") || loginUsed == 1){
 			 InicioAdministrador.getInstance().setVisible(true);
 		 }
-		 else if(Permisos.contains("EMPLEADOSCHEMA")){
+		 else if(Permisos.contains("EMPLEADOSCHEMA") || loginUsed == 2){
 			 InicioEmpleado.getInstance().setVisible(true);
 		 }
-		 else if(Permisos.contains("CLIENTESCHEMA")){
+		 else if(Permisos.contains("CLIENTESCHEMA") || loginUsed == 3){
 			 InicioCliente.getInstance().setVisible(true);
 		 }
 	}
@@ -82,4 +83,12 @@ public class OperacionesComunes {
 	public String getLoggedEmployee(){
 		return _instance.loggedEmployee;
 	}
+	
+	public void setLoginUsed(int loginUsed){
+		this.loginUsed = loginUsed;
+	}
+	
+	public int getLoginUsed(){
+		return loginUsed;
+	};
 }

@@ -7,6 +7,10 @@ public class Producto {
 	private String descripcionProducto;
 	private double precioProducto;
 
+	public Producto(long productoID){
+		this.productoID = productoID;
+	}
+	
 	public Producto(String nombreProducto, long cantidadProducto, String descripcionProducto, double precioProducto) {
 		super();
 		this.nombreProducto = nombreProducto;
@@ -53,6 +57,26 @@ public class Producto {
 	@Override
 	public String toString() {
 		return nombreProducto + "-" + precioProducto;
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (productoID ^ (productoID >>> 32));
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Producto other = (Producto) obj;
+		if (productoID == other.productoID)
+			return true;
+		return false;
 	}
 	
 	
