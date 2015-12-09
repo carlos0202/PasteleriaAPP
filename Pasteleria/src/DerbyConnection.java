@@ -87,8 +87,7 @@ public class DerbyConnection {
 		boolean loginSuccess = false;
 		try{
 			Class.forName("org.apache.derby.jdbc.ClientDriver").newInstance();
-			String conn = "jdbc:derby://localhost:1527/"+System.getProperty("user.dir")+"\\PasteleriaDB;user=" + user + ";password=" + pass;
-			System.out.println(conn);
+			String conn = "jdbc:derby://localhost:1527/PasteleriaDB;user=" + user + ";password=" + pass;
 			connection = DriverManager.getConnection(conn);
 			String schema = "select schemaname from sys.sysschemas where authorizationid = '"+ user.toUpperCase()+"'";
 			PreparedStatement pst = connection.prepareStatement(schema);
@@ -124,6 +123,7 @@ public class DerbyConnection {
 				rs.close();
 				return loginSuccess;
 		} catch(Exception ex){
+			System.out.println(ex.getMessage());
 			return false;
 		}
 
