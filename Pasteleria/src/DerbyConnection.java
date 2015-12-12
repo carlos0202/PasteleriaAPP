@@ -1,9 +1,12 @@
 import java.io.PrintWriter;
-import java.net.InetAddress;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 
-import javax.swing.*;
+import javax.swing.JOptionPane;
 
 import org.apache.derby.drda.NetworkServerControl;
 
@@ -38,6 +41,7 @@ public class DerbyConnection {
 			//Process p = Runtime.getRuntime().exec("./startnetwork.bat"); 
 			JOptionPane.showMessageDialog(null,"Servidor iniciado...");
 		} catch(Exception ex){
+			System.out.println(ex.getMessage());
 			JOptionPane.showMessageDialog(null,"No se ha podido iniciar el servidor. salidendo");
 			System.exit(0);
 		}
@@ -48,6 +52,7 @@ public class DerbyConnection {
 			server.shutdown();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
 			System.exit(0);
 		}
 	}
@@ -55,10 +60,11 @@ public class DerbyConnection {
 	{
 		try{
 				Class.forName("org.apache.derby.jdbc.ClientDriver");
-				Connection conn= DriverManager.getConnection("jdbc:derby://localhost:1527/"+System.getProperty("user.dir")+"PasteleriaDB;user=PasteleriaDBA;password=123");
+				Connection conn= DriverManager.getConnection("jdbc:derby://localhost:1527/PasteleriaDB;user=PasteleriaDBA;password=123");
 				return conn;
 			} catch(Exception e){
 				JOptionPane.showMessageDialog(null, "Error al conectar a BD");
+				System.out.println(e.getMessage());
 				return null;
 			}
 	}
@@ -79,6 +85,7 @@ public class DerbyConnection {
 				rs.close();
 				return loginSuccess;
 		} catch(Exception ex){
+			System.out.println(ex.getMessage());
 			return false;
 		}
 
@@ -153,6 +160,7 @@ public class DerbyConnection {
 			rs.close();
 		} catch(Exception ex){
 			JOptionPane.showMessageDialog(null, "Error al obtener los datos de la bd...");
+			System.out.println(ex.getMessage());
 			System.exit(1);
 		}
 	return tableNames;

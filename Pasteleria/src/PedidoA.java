@@ -1,22 +1,38 @@
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
+
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import net.proteanit.sql.DbUtils;
-import java.awt.event.ItemListener;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.sql.*;
-import java.awt.event.ActionEvent;
-import javax.swing.border.TitledBorder;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class PedidoA extends JFrame {
 
@@ -29,7 +45,7 @@ public class PedidoA extends JFrame {
 	public static DerbyConnection Connection;
 	private JTextField txtID;
 	private JTextField txtStatus;
-	private JComboBox txtProducto;
+	private JComboBox<models.Producto> txtProducto;
 	private JTextField txtCliente;
 	private JTextField txtAbono;
 	private JTextField txtTotal;
@@ -135,7 +151,7 @@ public class PedidoA extends JFrame {
 		contentPane.add(txtStatus);
 		txtStatus.setColumns(10);
 		
-		txtProducto = new JComboBox();
+		txtProducto = new JComboBox<models.Producto>();
 		txtProducto.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		txtProducto.setBounds(300, 51, 96, 20);
 		try{

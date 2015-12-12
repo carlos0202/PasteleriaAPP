@@ -1,24 +1,23 @@
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JTable;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
-import java.awt.Font;
-import org.eclipse.wb.swing.FocusTraversalOnArray;
-
-import net.proteanit.sql.DbUtils;
-
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.awt.event.ActionEvent;
-import java.awt.Color;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.border.EmptyBorder;
+
+import org.eclipse.wb.swing.FocusTraversalOnArray;
+
+import net.proteanit.sql.DbUtils;
 
 public class Producto extends JFrame {
 
